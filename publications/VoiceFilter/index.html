@@ -23,6 +23,9 @@
         In this paper, we present a novel system that separates the voice of a target speaker from multi-speaker signals, by making use of a reference signal from the target speaker. We achieve this by training two separate neural networks: (1) A speaker recognition network that produces speaker-discriminative embeddings; (2) A spectrogram masking network that takes both noisy spectrogram and speaker embedding as input, and produces a mask. Our system significantly reduces the speech recognition WER on multi-speaker signals, with minimal WER degradation on single-speaker signals.
       </p>
 
+      <p><b>System architecture:</b></p>
+      <p><img src="resources/architecture.png" height="400"></p>
+
       <h2>Random samples from LibriSpeech testing set</h2>
 
       <p>VoiceFilter model: CNN + bi-LSTM + fully connected</p>

@@ -27,10 +27,17 @@ body {
 #toc_container ul  {
   list-style: outside none none !important; margin-left: -40px;
 }
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.5em;
+}
 .h2_explainer {
   margin-bottom: 2px;
 }
 h3 {
+  font-size: 1.2em;
   margin-bottom: 2px;
 }
 .h3_explainer {
