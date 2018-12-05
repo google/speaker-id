@@ -1,24 +1,31 @@
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Generalized End-to-End Loss for Speaker Verification</title>
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/cerulean/bootstrap.min.css">
-    <link rel="shortcut icon" href="../../resources/logo.png">
-  </head>
-  <body>
-    <div>
-      <h1>Generalized End-to-End Loss for Speaker Verification</h1>
 
-      <h3>Paper</h3>
-      
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Generalized End-to-End Loss for Speaker Verification</title>
+  <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/cerulean/bootstrap.min.css">
+  <link rel="shortcut icon" href="../../resources/logo.png">
+</head>
+
+<body>
+  <div>
+    <h1>Generalized End-to-End Loss for Speaker Verification</h1>
+
+    <h3>Paper</h3>
+
+    <p>
       <a href="https://arxiv.org/abs/1710.10467">[Link]</a> to arXiv paper
+    </p>
 
-      <h3>Authors</h3>
-      
+    <h3>Authors</h3>
+
+    <p>
       Li Wan, Quan Wang, Alan Papir, Ignacio Lopez Moreno
-  
-      <h3>Abstract</h3>
+    </p>
 
+    <h3>Abstract</h3>
+
+    <p>
       In this paper, we propose a new loss function called generalized
       end-to-end (GE2E) loss, which makes the training of speaker verification
       models more efficient than our previous tuple-based end-to-end (TE2E)
@@ -32,14 +39,40 @@
       do domain adaptation - training a more accurate model that supports
       multiple keywords (i.e. "OK Google" and "Hey Google") as well as
       multiple dialects.
+    </p>
 
-      <h3>Slides</h3>
+    <h3>Slides</h3>
 
-      <a href="./resources/ICASSP 2018 GE2E.pptx">[PPTX]</a> for ICASSP 2018 presentation
+    <a href="./resources/ICASSP 2018 GE2E.pptx">[PPTX]</a> for ICASSP 2018 presentation
 
-      <h3>Lecture</h3>
+    <h3>Implementations</h3>
 
-      <iframe width="896" height="504" src="https://www.youtube.com/embed/AkCPHw2m6bY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-  </body>
+    <p>
+      The implementations of the GE2E loss has heavy dependencies on Google's
+      internal libraries, thus <b>CANNOT</b> be open sourced.
+    </p>
+
+    <p>
+      We are aware of several third-party implementations of this work, such as:
+      <li><a href="https://github.com/Janghyun1230/Speaker_Verification">
+          TensorFlow implementation by Janghyun1230</a></li>
+      <li><a href="https://github.com/HarryVolek/PyTorch_Speaker_Verification">
+          PyTorch implementaion by HarryVolek</a></li>
+    </p>
+
+    <p>
+      However, please note that
+      <b>we are NOT responsible for the correctness of any third-party
+        implementations.</b>
+      Please use your own judgement to decide whether you want to use these
+      implementations.
+    </p>
+
+    <h3>Lecture</h3>
+
+    <iframe width="896" height="504" src="https://www.youtube.com/embed/AkCPHw2m6bY" frameborder="0" allow="autoplay; encrypted-media"
+      allowfullscreen></iframe>
+  </div>
+</body>
+
 </html>
