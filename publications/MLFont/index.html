@@ -1,96 +1,118 @@
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Learning Better Font Slicing Strategies from Data</title>
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/cerulean/bootstrap.min.css">
-    <link rel="shortcut icon" href="./resources/logo.png">
-  </head>
-  <body>
-    <div>
-      <h1>Learning Better Font Slicing Strategies from Data</h1>
 
-      <h3>Defensive Publication</h3>
-      
-      <p>
-        <a href="https://www.tdcommons.org/dpubs_series/906/">[Link]</a> to Technical Disclosure Commons
-      </p>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Learning Better Font Slicing Strategies from Data</title>
+  <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/cerulean/bootstrap.min.css">
+  <link rel="shortcut icon" href="./resources/logo.png">
+</head>
 
-      <p>
-        <a href="./resources/Learning Better Font Slicing Strategies from Data.pdf">[PDF]</a> of the document
-      </p>
+<body>
+  <div>
+    <h1>Learning Better Font Slicing Strategies from Data</h1>
 
-      <h3>Authors</h3>
-      
-      Quan Wang (quanw@google.com), Yiran Mao (yiranm@google.com)
-  
-      <h3>Abstract</h3>
+    <h3>Defensive Publication</h3>
 
-      <p>
-        Often, fonts used in online resources such as websites are downloaded
-        from a server to a local device used for browsing the resource. While
-        typical Latin fonts are relatively small, such as on the order of
-        hundreds of kilobytes, some Latin fonts and, more typically, non-Latin,
-        e.g. Chinese, Japanese, Korean, etc., fonts can be much larger, such as
-        on the order of tens of megabytes. Distributing these fonts in their
-        entirety can result in a slow user experience, and so what is needed is
-        a method for faster distribution of these web fonts.
-      </p>
+    <p>
+      <a href="https://www.tdcommons.org/dpubs_series/906/">[Link]</a> to Technical Disclosure Commons
+    </p>
 
-      <p>
-        Generally, the present disclosure is directed to serving font files in
-        topical subsets. In particular, in some implementations, the systems and
-        methods of the present disclosure can include or otherwise leverage one
-        or more machine-learned models to predict topic labels of characters in
-        a font based on a corpus of characters or glyphs.
-      </p>
+    <p>
+      <a href="./resources/Learning Better Font Slicing Strategies from Data.pdf">[PDF]</a> of the document
+    </p>
 
-      <h3>Early Access</h3>
+    <h3>Authors</h3>
 
-      <p>
-        <a href="https://fonts.google.com/earlyaccess#Noto+Sans+SC+Sliced">
-          Noto Sans SC Sliced (Chinese Simplified)
-        </a>
-        is now publicly accessible on
-        <a href="https://fonts.google.com/earlyaccess">Early Access</a>!
-      </p>
+    Quan Wang (quanw@google.com), Yiran Mao (yiranm@google.com)
 
-      <p>
-        This font is the sliced version of
-        <a href="https://fonts.google.com/earlyaccess#Noto+Sans+SC">
-          Noto Sans SC
-        </a>,
-        using the topic model + genetic algorithm approach describe here.
-        It serves all 44,683 characters of this font, while Noto Sans SC only
-        serves a subset of
-        <a href="https://blogs.adobe.com/CCJKType/2014/03/china-8105.html">
-          8105 characters
-        </a>.
-      </p>
+    <h3>Abstract</h3>
 
-      <h3>Media</h3>
+    <p>
+      Often, fonts used in online resources such as websites are downloaded
+      from a server to a local device used for browsing the resource. While
+      typical Latin fonts are relatively small, such as on the order of
+      hundreds of kilobytes, some Latin fonts and, more typically, non-Latin,
+      e.g. Chinese, Japanese, Korean, etc., fonts can be much larger, such as
+      on the order of tens of megabytes. Distributing these fonts in their
+      entirety can result in a slow user experience, and so what is needed is
+      a method for faster distribution of these web fonts.
+    </p>
 
-      <h4>Google Fonts official Twitter announcements</h4>
+    <p>
+      Generally, the present disclosure is directed to serving font files in
+      topical subsets. In particular, in some implementations, the systems and
+      methods of the present disclosure can include or otherwise leverage one
+      or more machine-learned models to predict topic labels of characters in
+      a font based on a corpus of characters or glyphs.
+    </p>
 
-      <li><a href="https://twitter.com/googlefonts/status/900019727732531200">https://twitter.com/googlefonts/status/900019727732531200</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/900143295405469698">https://twitter.com/googlefonts/status/900143295405469698</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/900374191576293376">https://twitter.com/googlefonts/status/900374191576293376</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/900536047674720256">https://twitter.com/googlefonts/status/900536047674720256</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/900744987041726464">https://twitter.com/googlefonts/status/900744987041726464</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/900843782651891713">https://twitter.com/googlefonts/status/900843782651891713</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/901108264007553024">https://twitter.com/googlefonts/status/901108264007553024</a></li>
-      <li><a href="https://twitter.com/googlefonts/status/901658119809458176">https://twitter.com/googlefonts/status/901658119809458176</a></li>
-      
-      <h4>Unsolicited media/blog coverage (mostly in Chinese)</h4>
-      
-      <li><a href="https://www.landiannews.com/archives/38885.html">landiannews</a></li>
-      <li><a href="http://dyartstyle.com/3641.html">dyartstyle</a></li>
-      <li><a href="https://www.ziti163.com/Item/1896.aspx">ziti163</a></li>
-      <li><a href="http://www.baozouweilai.com/a/65989.html">baozouweilai</a></li>
-      <li><a href="https://www.cnbeta.com/articles/tech/645051.htm">cnbeta</a></li>
-      <li><a href="http://www.cnblogs.com/fonts/p/7442369.html">cnblogs</a></li>
-      <li><a href="http://mini.eastday.com/a/170825115623956.html">eastday</a></li>
-      <li><a href="https://laod.cn/news/google-fonts-api.html">laod</a></li>
-      <li><a href="https://kknews.cc/tech/kzjppy8.html">kknews</a></li>
-   </div>
-  </body>
+    <h3>Early Access</h3>
+
+    <p>
+      <a href="https://fonts.google.com/earlyaccess#Noto+Sans+SC+Sliced">
+        Noto Sans SC Sliced (Chinese Simplified)
+      </a>
+      is now publicly accessible on
+      <a href="https://fonts.google.com/earlyaccess">Early Access</a>!
+    </p>
+
+    <p>
+      This font is the sliced version of
+      <a href="https://fonts.google.com/earlyaccess#Noto+Sans+SC">
+        Noto Sans SC
+      </a>,
+      using the topic model + genetic algorithm approach describe here.
+      It serves all 44,683 characters of this font, while Noto Sans SC only
+      serves a subset of
+      <a href="https://blogs.adobe.com/CCJKType/2014/03/china-8105.html">
+        8105 characters
+      </a>.
+    </p>
+
+    <h3>Our Top Users</h3>
+
+    <p>
+      <li>translate.google.cn</li>
+      <li>my.clevelandclinic.org</li>
+      <li>mini.gameloft.com.cn</li>
+      <li>www.kerrylogistics.com</li>
+      <li>www.kdanmobile.com</li>
+      <li>neum.kr</li>
+      <li>www.solvil-et-titus.my</li>
+      <li>www.mala-1.com.tw</li>
+      <li>www.solvil-et-titus.hk</li>
+      <li>www.honam.ac.kr</li>
+      <li>allie-campaign.com</li>
+      <li>www.toyota-body.co.jp</li>
+      <li>tw.news.kobo.com</li>
+      <li>www.mos.ru</li>
+    </p>
+
+    <h3>Media</h3>
+
+    <h4>Google Fonts official Twitter announcements</h4>
+
+    <li><a href="https://twitter.com/googlefonts/status/900019727732531200">https://twitter.com/googlefonts/status/900019727732531200</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/900143295405469698">https://twitter.com/googlefonts/status/900143295405469698</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/900374191576293376">https://twitter.com/googlefonts/status/900374191576293376</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/900536047674720256">https://twitter.com/googlefonts/status/900536047674720256</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/900744987041726464">https://twitter.com/googlefonts/status/900744987041726464</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/900843782651891713">https://twitter.com/googlefonts/status/900843782651891713</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/901108264007553024">https://twitter.com/googlefonts/status/901108264007553024</a></li>
+    <li><a href="https://twitter.com/googlefonts/status/901658119809458176">https://twitter.com/googlefonts/status/901658119809458176</a></li>
+
+    <h4>Unsolicited media/blog coverage (mostly in Chinese)</h4>
+
+    <li><a href="https://www.landiannews.com/archives/38885.html">landiannews</a></li>
+    <li><a href="http://dyartstyle.com/3641.html">dyartstyle</a></li>
+    <li><a href="https://www.ziti163.com/Item/1896.aspx">ziti163</a></li>
+    <li><a href="http://www.baozouweilai.com/a/65989.html">baozouweilai</a></li>
+    <li><a href="https://www.cnbeta.com/articles/tech/645051.htm">cnbeta</a></li>
+    <li><a href="http://www.cnblogs.com/fonts/p/7442369.html">cnblogs</a></li>
+    <li><a href="http://mini.eastday.com/a/170825115623956.html">eastday</a></li>
+    <li><a href="https://laod.cn/news/google-fonts-api.html">laod</a></li>
+    <li><a href="https://kknews.cc/tech/kzjppy8.html">kknews</a></li>
+  </div>
+</body>
+
 </html>
