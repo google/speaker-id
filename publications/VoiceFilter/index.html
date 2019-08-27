@@ -280,7 +280,9 @@
       </tbody>
     </table>
 
-    <h2>Implementation</h2>
+    <h2>FAQ</h2>
+
+    <h3>Can you share your code?</h3>
 
     <p>
       Unfortunately, the original VoiceFilter system heavily depends on
@@ -296,6 +298,21 @@
     <p>
       <a href="https://github.com/mindslab-ai/voicefilter">https://github.com/mindslab-ai/voicefilter</a>
     </p>
+
+    <h3>In Table 4 of your paper, why SDR of "No VoiceFilter" is so high? Does it mean your problem is very easy?</h3>
+
+    <p>No. The high SDR is because of the way we prepare our training data - we trim the noisy audio to be the same
+      length as the clean audio for training.</p>
+
+    <p>For example, if the clean audio is 5 seconds, the interference audio is 1 second, then the resulting noisy audio
+      will consist of 1 second of really noisy audio, and 4 seconds of actually clean audio. Thus a big part of our
+      "noisy" audios are actually clean, and when we compute the SDR statistically, we get very large numbers
+      (especially the mean).</p>
+
+    <p>However, since we use the same volumn for clean and interference audios, if we only look at the really noisy
+      parts of the noisy audio, the theoretically SDR should be 0.</p>
+
+    <p>So the conclusion: We are <b>NOT</b> solving a problem which is easier than others.</p>
 
     <h2>Dataset information</h2>
 
