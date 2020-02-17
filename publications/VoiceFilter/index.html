@@ -301,6 +301,11 @@
       <a href="https://github.com/mindslab-ai/voicefilter">https://github.com/mindslab-ai/voicefilter</a>
     </p>
 
+    <p>
+      Please note that we are not responsible for the correctness or quality of third-party implementations. Please use
+      your own judgement to decide whether you want to use these implementations.
+    </p>
+
     <h3>In Table 4 of your paper, why SDR of "No VoiceFilter" is so high? Does it mean your problem is very easy?</h3>
 
     <p>No. The high SDR is because of the way we prepare our training data - we trim the noisy audio to be the same
@@ -312,7 +317,7 @@
       (especially the mean).</p>
 
     <p>However, since we use the same volume for clean and interference audios, if we only look at the really noisy
-      parts of the noisy audio, the theoretically SDR should be 0.</p>
+      parts of the noisy audio, the theoretical SDR should be 0.</p>
 
     <p>So the conclusion: We are <b>NOT</b> solving a problem which is easier than others.</p>
 
