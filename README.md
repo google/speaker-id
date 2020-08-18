@@ -13,3 +13,4 @@ accompanying publications related to the speaker-id team at Google.
 * [Generalized End-to-End Loss](https://google.github.io/speaker-id/publications/GE2E/)
 * [LSTM Diarization](https://google.github.io/speaker-id/publications/LstmDiarization/)
 * [MLFont](https://google.github.io/speaker-id/publications/MLFont/)
+* [Textual Echo Cancellation](https://google.github.io/speaker-id/publications/TEC/)
