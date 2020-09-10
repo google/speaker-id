@@ -9,6 +9,7 @@ accompanying publications related to the speaker-id team at Google.
 
 ## Pages
 
+* [VoiceFilter-Lite](https://google.github.io/speaker-id/publications/VoiceFilter-Lite/)
 * [VoiceFilter](https://google.github.io/speaker-id/publications/VoiceFilter/)
 * [Generalized End-to-End Loss](https://google.github.io/speaker-id/publications/GE2E/)
 * [LSTM Diarization](https://google.github.io/speaker-id/publications/LstmDiarization/)
