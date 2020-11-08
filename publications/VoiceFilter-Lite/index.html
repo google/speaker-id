@@ -10,6 +10,13 @@
       display: block;
       white-space: pre-wrap
     }
+
+    table,
+    th,
+    td {
+      border: 1px solid grey;
+      border-collapse: collapse;
+    }
   </style>
 </head>
 
@@ -44,5 +51,134 @@
     <p><b>Video demos:</b></p>
     <iframe width="800" height="450" src="https://www.youtube.com/embed/BiWMZdnHuVs" frameborder="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <p><b>Citation:</b></p>
+    <code>
+      @inproceedings{Wang2020,
+      author={Quan Wang and Ignacio Lopez Moreno and Mert Saglam and Kevin Wilson and Alan Chiao and Renjie Liu and
+      Yanzhang He and Wei Li and Jason Pelecanos and Marily Nika and Alexander Gruenstein},
+      title={{VoiceFilter-Lite: Streaming Targeted Voice Separation for On-Device Speech Recognition}},
+      year=2020,
+      booktitle={Proc. Interspeech 2020},
+      }
+    </code>
+
+    <h3>Example speech recognition results of noisified LibriSpeech</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Noisy audio input</th>
+          <th>Ground truth transcript of target speaker</th>
+          <th>Recognized text (without VoiceFilter-Lite)</i></th>
+          <th>Recognized text (with VoiceFilter-Lite)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/4446-2273-0013-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>HAVE YOU BEEN IN PARIS MUCH THESE LATE YEARS</td>
+          <td>Have you been in Paris much easier</td>
+          <td>Have you been in Paris much these late years</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/3528-168669-0017-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>WILL THAT BE ALL NO</td>
+          <td>No</td>
+          <td>Will that be all No</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/3528-168669-0028-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>AND THEN THE WIND IS NOT BLOWING IN MY DIRECTION THIS MORNING</td>
+          <td>directions this morning</td>
+          <td>And then the wind is not blowing in my direction this morning</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/3997-180294-0001-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>YES BUT IF I SHOULD ALREADY ASK FOR SOMETHING WHAT</td>
+          <td></td>
+          <td>Yes but if I should already ask for something what</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/3528-168669-0094-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>OH HOW WICKED PEOPLE ARE</td>
+          <td></td>
+          <td>Oh how wicked people are</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/1580-141084-0008-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>I CANNOT ALLOW THE EXAMINATION TO BE HELD IF ONE OF THE PAPERS HAS BEEN TAMPERED WITH THE SITUATION MUST
+            BE FACED</td>
+          <td></td>
+          <td>I can't allow the examination to be held if one of the papers has been tampered with the situation must be
+            faced</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/5683-32865-0005-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>BUT HER GREETING TO CAPTAIN LAKE WAS MORE THAN USUALLY HAUGHTY AND FROZEN AND HER FEATURES I FANCIED
+            PARTICULARLY PROUD AND PALE</td>
+          <td>was more than usually hottie and frozen and her features I fancied particularly proud and pale</td>
+          <td>but her greeting to Captain Lake was more than usually hottie and frozen and her features I fancied
+            particularly proud and pale</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/237-134500-0026-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>SURELY YOU ARE NOT THINKING OF GOING OFF THERE</td>
+          <td></td>
+          <td>Actually you are not thinking of going off there</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/260-123440-0014-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>AND I DECLARE IT'S TOO BAD THAT IT IS</td>
+          <td>the difference</td>
+          <td>I declare it's too bad that it is</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/5764-299665-0023-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>MOST PEOPLE CLING TO THE SUPERNATURAL</td>
+          <td>moose</td>
+          <td>most people think to the supernatural</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/237-126133-0024-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>AND THE OLD GENTLEMAN WAS SO DELIGHTED WITH HIS SUCCESS THAT HE HAD TO BURST OUT INTO A SERIES OF SHORT
+            HAPPY BITS OF LAUGHTER THAT OCCUPIED QUITE A SPACE OF TIME</td>
+          <td>cellulite with his success that he had to burst out into a series of short happy bits of laughter that
+            occupied quite a space of time</td>
+          <td>and the old gentleman was so delighted with his success that he had the burst out into a series of short
+            happy bits of laughter that occupied quite a space of time</td>
+        </tr>
+        <tr>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/908-31957-0014-VOICEFILTER_SPEAKER_NOISE_CONFIG-0.wav" type="audio/wav">
+            </audio></td>
+          <td>A RING OF AMETHYST I COULD NOT WEAR HERE PLAINER TO MY SIGHT THAN THAT FIRST KISS</td>
+          <td>meaning of amethyst then that first kiss</td>
+          <td>a ring of amethyst I could not wear here plainer to my side then that first kiss</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </body>
