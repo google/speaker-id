@@ -1,46 +1,54 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Textual Echo Cancellation</title>
-  <link rel="stylesheet" type="text/css" href="./resources/stylesheet.css">
-  <link rel="shortcut icon" href="../../resources/logo.png">
-  <style>
-    code {
-      display: block;
-      white-space: pre-wrap
-    }
-  </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Textual Echo Cancellation</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/stylesheet.css">
+    <link rel="shortcut icon" href="../../resources/logo.png">
+    <style>
+        code {
+            display: block;
+            white-space: pre-wrap
+        }
+    </style>
 </head>
 
 <body>
-  <div>
-    <h1>Textual Echo Cancellation</h1>
-    <p><b>Paper:</b> <a href="https://arxiv.org/abs/2008.06006">arXiv</a></p>
-    <p><b>Authors:</b> Shaojin Ding, Ye Jia, Ke Hu, Quan Wang</p>
+    <div>
+        <h1>Textual Echo Cancellation</h1>
+        <p><b>Paper:</b> <a href="https://arxiv.org/abs/2008.06006">arXiv</a></p>
+        <p><b>Authors:</b> Shaojin Ding, Ye Jia, Ke Hu, Quan Wang</p>
 
-    <p><b>Abstract:</b>
-      In this paper, we propose Textual Echo Cancellation (TEC) - a framework for cancelling the text-to-speech (TTS)
-      playback echo from overlapped speech recordings. Such a system can largely improve speech recognition performance
-      and user experience for intelligent devices such as smart speakers, as the user can talk to the device while the
-      device is still playing the TTS signal responding to the previous query. We implement this system by using a novel
-      sequence-to-sequence model with multi-source attention that takes both the microphone mixture signal and the
-      source text of the TTS playback as inputs, and predicts the enhanced audio. Experiments show that the textual
-      information of the TTS playback is critical to the enhancement performance. Besides, the text sequence is much
-      smaller in size compared with the raw acoustic signal of the TTS playback, and can be immediately transmitted to
-      the device and the ASR server even before the playback is synthesized. Therefore, our proposed approach
-      effectively reduces Internet communication and latency compared with alternative approaches such as acoustic echo
-      cancellation (AEC).
-    </p>
+        <p><b>Abstract:</b>
+            In this paper, we propose Textual Echo Cancellation (TEC) - a framework for cancelling the text-to-speech
+            (TTS)
+            playback echo from overlapped speech recordings. Such a system can largely improve speech recognition
+            performance
+            and user experience for intelligent devices such as smart speakers, as the user can talk to the device while
+            the
+            device is still playing the TTS signal responding to the previous query. We implement this system by using a
+            novel
+            sequence-to-sequence model with multi-source attention that takes both the microphone mixture signal and the
+            source text of the TTS playback as inputs, and predicts the enhanced audio. Experiments show that the
+            textual
+            information of the TTS playback is critical to the enhancement performance. Besides, the text sequence is
+            much
+            smaller in size compared with the raw acoustic signal of the TTS playback, and can be immediately
+            transmitted to
+            the device and the ASR server even before the playback is synthesized. Therefore, our proposed approach
+            effectively reduces Internet communication and latency compared with alternative approaches such as acoustic
+            echo
+            cancellation (AEC).
+        </p>
 
-    <p><b>System architecture:</b></p>
-    <p><img src="resources/TEC_diagram.png" width="800"></p>
+        <p><b>System architecture:</b></p>
+        <p><img src="resources/TEC_diagram.png" width="800"></p>
 
-    <h2>Random audio samples from LibriTTS testing set</h2>
+        <h2>Random audio samples from LibriTTS testing set</h2>
 
-    <p>Data configurations under the two condition:</p>
+        <p>Data configurations under the two condition:</p>
 
-    <p><img src="resources/data_config.png" width="800"></p>
+        <p><img src="resources/data_config.png" width="800"></p>
 
     <p>Meaning of the columns in the table below:
       <ol>
@@ -56,7 +64,7 @@
       </ol>
     </p>
 
-    <h3>Single interfering voice condition</h3>
+        <h3>Single interfering voice condition</h3>
 
     <table>
       <thead>
@@ -160,7 +168,8 @@
       </tbody>
     </table>
 
-    <h3>Multiple interfering voices condition</h3>
+        <h3>Multiple interfering voices condition</h3>
+
 
     <table>
       <thead>
@@ -264,6 +273,7 @@
       </tbody>
     </table>
   </div>
+
 </body>
 
 </html>

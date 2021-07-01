@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Personal VAD: Speaker-Conditioned Voice Activity Detection
+  </title>
+  <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/cerulean/bootstrap.min.css">
+  <link rel="shortcut icon" href="../../resources/logo.png">
+  <style>
+    code {
+      display: block;
+      white-space: pre-wrap
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Personal VAD: Speaker-Conditioned Voice Activity Detection</h1>
+
+    <p><b>Paper:</b> <a href="https://arxiv.org/abs/1908.04284">arXiv</a></p>
+    <p><b>Slides:</b> <a href="./resources/odyssey2020_personalvad_slides.pdf">PDF</a></p>
+    <p><b>Authors:</b> Shaojin Ding *, Quan Wang *, Shuo-yiin Chang, Li Wan, Ignacio Lopez Moreno. <i>(*: Equal
+        contribution.)</i>
+    </p>
+
+    <p><b>Abstract:</b>
+      In this paper, we propose "personal VAD", a system to detect the voice activity of a target speaker at the frame
+      level. This system is useful for gating the inputs to a streaming on-device speech recognition system, such that
+      it only triggers for the target user, which helps reduce the computational cost and battery consumption,
+      especially in scenarios where a keyword detector is unpreferable. We achieve this by training a VAD-alike neural
+      network that is conditioned on the target speaker embedding or the speaker verification score. For each frame,
+      personal VAD outputs the probabilities for three classes: non-speech, target speaker speech, and non-target
+      speaker speech. Under our optimal setup, we are able to train a model with only 130K parameters that outperforms a
+      baseline system where individually trained standard VAD and speaker recognition networks are combined to perform
+      the same task.
+    </p>
+
+    <p><b>System architecture:</b></p>
+    <p><img src="resources/architecture.png" width="1000"></p>
+
+    <p><b>Lectures:</b></p>
+    <iframe width="800" height="450" src="https://www.youtube.com/embed/5Ca2Ylf_T60" frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <p><b>Citation:</b></p>
+    <code>
+      @inproceedings{Ding2020,
+      author={Shaojin Ding and Quan Wang and Shuo-Yiin Chang and Li Wan and Ignacio {Lopez Moreno}},
+      title={{Personal VAD: Speaker-Conditioned Voice Activity Detection}},
+      year=2020,
+      booktitle={Proc. Odyssey 2020 The Speaker and Language Recognition Workshop},
+      pages={433--439},
+      doi={10.21437/Odyssey.2020-62},
+      url={http://dx.doi.org/10.21437/Odyssey.2020-62}
+      }
+    </code>
+  </div>
+</body>
+
+</html>
