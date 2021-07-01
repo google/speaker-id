@@ -49,8 +49,9 @@
         <li>TTS playback: The TTS playback. <i>Only used for AEC baseline system</i>.</li>
         <li>TTS playback source text: The source text of TTS playback. <i>Only used for TEC system</i>.</li>
         <li>TEC: The output from the proposed TEC model.</li>
-        <li>NoSideInput: The output from the baseline NoSideInput model.</li>
-        <li>AEC: The output from the baseline AEC model.</li>
+        <li>AEC-NLMS: Signal processing AEC method based on normalized least mean square (NLMS).</li>
+        <li>Vanilla-Seq2seq: The output from the baseline NoSideInput model.</li>
+        <li>AEC-Seq2seq: The output from the baseline AEC model.</li>
         <li>User's speech: The clean user's speech audio, which is the ground truth.</li>
       </ol>
     </p>
@@ -64,8 +65,9 @@
           <th>TTS playback <i>(only for AEC)</i></th>
           <th>TTS playback source text <i>(only for TEC)</i></th>
           <th>TEC (proposed)</th>
-          <th>NoSideInput</th>
-          <th>AEC</th>
+          <th>AEC-NLMS</th>
+          <th>Vanilla-Seq2seq</th>
+          <th>AEC-Seq2seq</th>
           <th>User's speech (ground truth)</th>
         </tr>
       </thead>
@@ -79,9 +81,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/tec/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/nosideinput/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/aec_nlms/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/aec/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/vanilla_seq2seq/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/single/aec_seq2seq/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/clean/121_127105_000042_000005_interfering_LJ049-0031.wav" type="audio/wav"></audio></td>
         </tr>
@@ -94,9 +98,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/tec/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/nosideinput/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/aec_nlms/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/aec/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/vanilla_seq2seq/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/single/aec_seq2seq/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/clean/1089_134686_000002_000002_interfering_LJ034-0037.wav" type="audio/wav"></audio></td>
         </tr>
@@ -109,9 +115,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/tec/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/nosideinput/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/aec_nlms/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/aec/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/vanilla_seq2seq/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/single/aec_seq2seq/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/clean/1089_134686_000002_000003_interfering_LJ002-0076.wav" type="audio/wav"></audio></td>
         </tr>
@@ -124,9 +132,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/tec/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/nosideinput/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/aec_nlms/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/aec/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/vanilla_seq2seq/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/single/aec_seq2seq/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/clean/1284_1180_000029_000001_interfering_LJ039-0014.wav" type="audio/wav"></audio></td>
         </tr>
@@ -139,9 +149,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/tec/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/nosideinput/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/aec_nlms/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/single/aec/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
+              <source src="audios/single/vanilla_seq2seq/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/single/aec_seq2seq/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/single/clean/1320_122612_000051_000000_interfering_LJ018-0305.wav" type="audio/wav"></audio></td>
         </tr>
@@ -157,8 +169,9 @@
           <th>TTS playback <i>(only for AEC)</i></th>
           <th>TTS playback source text <i>(only for TEC)</i></th>
           <th>TEC (proposed)</th>
-          <th>NoSideInput</th>
-          <th>AEC</th>
+          <th>AEC-NLMS</th>
+          <th>Vanilla-Seq2seq</th>
+          <th>AEC-Seq2seq</th>
           <th>User's speech (ground truth)</th>
         </tr>
       </thead>
@@ -171,10 +184,12 @@
           <td style="width: 220px;">It is a job creation scheme.</td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/tec/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
+              <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                <source src="audios/multiple/aec_nlms/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/nosideinput/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/vanilla_seq2seq/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/aec/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/aec_seq2seq/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/clean/1089_134686_000002_000000_interfering_p241_075.wav" type="audio/wav"></audio></td>
         </tr>
@@ -187,9 +202,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/tec/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/nosideinput/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/aec_nlms/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/aec/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/vanilla_seq2seq/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/multiple/aec_seq2seq/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/clean/1089_134686_000015_000002_interfering_p239_098.wav" type="audio/wav"></audio></td>
         </tr>
@@ -202,9 +219,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/tec/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/nosideinput/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/aec_nlms/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/aec/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/vanilla_seq2seq/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/multiple/aec_seq2seq/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/clean/1284_1180_000053_000001_interfering_p230_144.wav" type="audio/wav"></audio></td>
         </tr>
@@ -217,9 +236,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/tec/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/nosideinput/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/aec_nlms/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/aec/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/vanilla_seq2seq/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/multiple/aec_seq2seq/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/clean/1320_122612_000053_000000_interfering_p363_107.wav" type="audio/wav"></audio></td>
         </tr>
@@ -232,9 +253,11 @@
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/tec/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/nosideinput/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/aec_nlms/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
-              <source src="audios/multiple/aec/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
+              <source src="audios/multiple/vanilla_seq2seq/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
+          <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
+              <source src="audios/multiple/aec_seq2seq/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
           <td><audio controls class="audio-player" preload="metadata" style="width: 220px;">
               <source src="audios/multiple/clean/1995_1837_000019_000000_interfering_p326_154.wav" type="audio/wav"></audio></td>
         </tr>
