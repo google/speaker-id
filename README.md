@@ -7,6 +7,11 @@ accompanying publications related to the speaker-id team at Google.
 
 **This is NOT an official Google product.**
 
+If you are interested in using our products:
+
+* [Link your voice to your devices with Voice Match](https://support.google.com/assistant/answer/9071681) ([Blog](https://blog.google/products/assistant/tomato-tomahto-google-home-now-supports-multiple-users/))
+* Start using [Cloud Speaker ID](https://cloud.google.com/speaker-id) ([Blog](https://cloud.google.com/blog/products/ai-machine-learning/google-cloud-announces-speaker-id))
+
 ## Pages
 
 * [VoiceFilter-Lite](https://google.github.io/speaker-id/publications/VoiceFilter-Lite/)
