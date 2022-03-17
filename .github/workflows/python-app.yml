@@ -30,4 +30,4 @@ jobs:
         flake8 --indent-size 2 --max-line-length 80 attentive_scoring
     - name: Run tests
       run: |
-        sh attentive_scoring/run_tests.sh
+        bash attentive_scoring/run_tests.sh
