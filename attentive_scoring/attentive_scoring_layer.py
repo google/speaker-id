@@ -1,10 +1,15 @@
 """Layer to perform attentive scoring."""
+
 import math
+
 from lingvo import compat as tf
 from lingvo.core import base_layer
 from lingvo.core import py_utils
+
+
 class AttentiveScoringLayer(base_layer.BaseLayer):
   """Calculates attentive scores for enroll & test set representations."""
+
   @classmethod
   def Params(cls):
     p = super(AttentiveScoringLayer, cls).Params()
@@ -56,10 +61,13 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         'apply_softmax_per_test_key', False, 'Instead of applying softmax '
         'across all key comparisons, apply softmax for each test utterance '
         'key across all other enrollment keys. (Default: False)')
+
     return p
+
   def __init__(self, params):
     super().__init__(params)
     p = self.params
+
     # Check that the parameters are valid.
     if p.num_keys < 1:
       raise ValueError('The parameter num_keys must be an integer greater than '
@@ -73,6 +81,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
     if p.scale_factor <= 0:
       raise ValueError('The parameter scale_factor must be a real value greater'
                        ' than 0.')
+
     if p.use_trainable_scale_factor:
       weight_config = py_utils.WeightParams(
           shape=[],
@@ -80,8 +89,10 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
           dtype=p.dtype,
           collections=[self.__class__.__name__ + '_vars'])
       self.CreateVariable('trainable_log_scale_factor', weight_config)
+
   def FProp(self, inputs, theta=None):
     """Performs attentive scoring given enrollment and test representations.
+
     Args:
       inputs: A tuple of 2 items. The first is the test representations and the
         second is the enrollment speaker representations.
@@ -94,11 +105,13 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         a key dimensionality of 4 and a value dimensionality of 10, the
         representation_dim would be 2 * (4 + 10) = 28. The representation_dim
         contains all statistics related to a single utterance.
+
         Each utterance representation is composed of the concatenated result
         of num_keys sets of statistics. The first key_dim numbers of each
         set contains the key and the next value_dim numbers holds the
         corresponding values. The total dimensionality of each utterance
         representation may be calculated as num_keys * (key_dim + value_dim).
+
         Note that the dimensionality for both test utterance and
         enrollment utterance representations is the same.
       theta: A NestedMap containing layer weights specific to the
@@ -111,18 +124,24 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         with all enrollment speaker models (comprising multiple utterances).
         The result is a tf.float32 tensor of size:
         [num_test_utts, num_enroll_spks(or num_models)]
+
     """
+
     p = self.params
+
     # Retrieve the test and enrollment data
     (test_data, enroll_data) = inputs
+
     # Determine the input parameters
     representation_dim = enroll_data.shape[2]
     test_representation_dim = test_data.shape[1]
+
     # Check that the sizes are valid
     if representation_dim != test_representation_dim:
       raise ValueError('The enrollment representation_dim (dim=%d) must be the '
                        'same as the test_representation_dim (dim=%d).' %
                        (representation_dim, test_representation_dim))
+
     if p.use_keys_and_queries:
       expected_representation_dim = p.num_keys * (2 * p.key_dim + p.value_dim)
       if expected_representation_dim != representation_dim:
@@ -143,6 +162,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
             ' value_dim) or %d * (%d + %d).' %
             (expected_representation_dim, representation_dim, p.num_keys,
              p.key_dim, p.value_dim))
+
     # Extract keys, queries and values from the utterance representations and
     # apply L2 normalization on each if enabled. If p.use_keys_and_queries is
     # True, keys and queries will be set the same.
@@ -162,6 +182,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
     # test_values has size: [num_test_utts, num_keys, value_dim]
     (enroll_keys, _, enroll_values) = (self._extract_and_norm(enroll_data))
     (_, test_queries, test_values) = self._extract_and_norm(test_data)
+
     # Determine whether to have a static or trainable scale factor
     if p.use_trainable_scale_factor:
       # Note that exp(log_scale_factor) resolves to the regular
@@ -176,6 +197,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
             'specifying theta.trainable_log_scale_factor.')
     else:
       scale_factor = p.scale_factor
+
     # Generate all cross scores for keys and values.
     # For the key scores, scale by scale_factor so that it is ready for the
     # softmax calculation. For both keys and values, the output shape is:
@@ -185,6 +207,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         test_queries, enroll_keys, axes=((2), (3)))
     values_cross_scores = tf.tensordot(
         test_values, enroll_values, axes=((2), (3)))
+
     if p.apply_softmax_per_test_key:
       # Calculate the softmax across scores specific to each test key for a
       # trial. Also scale down by the number of test keys so that the final
@@ -195,10 +218,12 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
       # Calculate softmax across all key scores specific to each trial
       scoring_softmax = tf.keras.activations.softmax(
           keys_cross_scores_scaled, axis=[1, 3, 4])
+
     # Calculate scores of test segments against bundled enrollment segments
     # normalized by the softmax weighting function.
     scores = tf.math.reduce_sum(
         tf.multiply(values_cross_scores, scoring_softmax), axis=(1, 3, 4))
+
     # Check if we will be applying an additional L2-norm for the effective
     # concatenated attention vector
     if p.apply_global_l2_norm_to_concat_form:
@@ -206,9 +231,12 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
                                                        test_values,
                                                        enroll_values)
       scores = tf.math.divide(scores, concat_norm)
+
     return scores
+
   def _extract_and_norm(self, representation_data):
     """Extracts keys and values and L2 normalizes them if requested.
+
     Args:
       representation_data: The fixed dimensional representations for each
         utterance. Tensors can be of two different shapes. For enrollment data
@@ -218,6 +246,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         [num_test_utts, representation_dim].
         For both cases, the parameter representation_dim is equivalent to
         num_keys * (key_dim + value_dim).
+
     Returns:
       keys: The extracted keys. Tensors can be of two different shapes. For
         enrollment data they are tf.float32 (4d) tensors of size:
@@ -244,7 +273,9 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         These may be L2-normalized along the value_dim axis if the
         apply_l2_norm_to_values attribute is True and unnormalized if False.
     """
+
     p = self.params
+
     if p.use_keys_and_queries:
       key_query_value_dim = 2 * p.key_dim + p.value_dim
       query_start_ndx = p.key_dim
@@ -253,6 +284,7 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
       key_query_value_dim = p.key_dim + p.value_dim
       query_start_ndx = 0
       query_stop_ndx = p.key_dim
+
     # Extract the key and value tensors specific to whether the data is test
     # data (2 axes) or enrollment data (3 axes).
     data_shape = representation_data.shape.as_list()
@@ -282,17 +314,22 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
       keys = data_reshaped[:, :, :, 0:p.key_dim]
       queries = data_reshaped[:, :, :, query_start_ndx:query_stop_ndx]
       values = data_reshaped[:, :, :, query_stop_ndx:]
+
     # If enabled, perform unit length normalization on keys (or queries)
     if p.apply_l2_norm_to_keys:
       keys = tf.nn.l2_normalize(keys, axis=-1)
       queries = tf.nn.l2_normalize(queries, axis=-1)
+
     # If enabled, perform unit length normalization on values
     if p.apply_l2_norm_to_values:
       values = tf.nn.l2_normalize(values, axis=-1)
+
     return (keys, queries, values)
+
   def _calc_l2_norm_for_concat_form(self, scoring_softmax, test_values,
                                     enroll_values):
     """Calculates the L2-norm for the effective concatenated attention vector.
+
     Args:
       scoring_softmax: The softmax weightings to apply to the (trial based)
         cross scores. Tensors are of tf.float32 with size: [num_test_utts,
@@ -302,14 +339,17 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
         [num_test_utts, num_keys, value_dim]
       enroll_values: The enrollment vector related values (tf.float32) of size:
         [num_enroll_spks, num_enroll_utts_per_spk, num_keys, value_dim]
+
     Returns:
       l2_norm_concat: The effective L2-norm to divide the attention scores by.
         The result is tf.float32 of size: [num_test_utts, num_enroll_speakers].
     """
+
     # Test embeddings
     # Result is 2d: [num_test_utts, num_keys]
     test_values_sumsq = tf.math.reduce_sum(
         tf.math.multiply(test_values, test_values), axis=2)
+
     # Result is 2d: [num_test_utts, num_enroll_speakers]
     test_values_sumsq_weighted = tf.math.sqrt(
         tf.reduce_sum(
@@ -317,10 +357,12 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
                 scoring_softmax, test_values_sumsq[:, :, tf.newaxis, tf.newaxis,
                                                    tf.newaxis]),
             axis=(1, 3, 4)))
+
     # Enroll embeddings
     # Result is 3d: [num_enroll_spks, num_enroll_utts_per_spk, num_keys]
     enroll_values_sumsq = tf.math.reduce_sum(
         tf.math.multiply(enroll_values, enroll_values), axis=3)
+
     # Result is 2d: [num_test_utts, num_enroll_speakers]
     enroll_values_sumsq_weighted = tf.math.sqrt(
         tf.reduce_sum(
@@ -328,8 +370,10 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
                 scoring_softmax, enroll_values_sumsq[tf.newaxis,
                                                      tf.newaxis, :, :, :]),
             axis=(1, 3, 4)))
+
     # Determine the matrix to normalize the cross scores by
     # Result is 2d: [num_test_utts, num_enroll_speakers]
     l2_norm_concat = tf.math.multiply(test_values_sumsq_weighted,
                                       enroll_values_sumsq_weighted)
+
     return l2_norm_concat
