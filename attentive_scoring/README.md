@@ -12,7 +12,9 @@ Here we open source part of the core implementations used in this paper:
 
 ## Instructions
 
-To be added.
+The attentive scoring is implemented in `lingvo/attentive_scoring_layer.py`.
+
+The attentive temporal pooling is implemented in `lingvo/cumulative_statistics_layer.py`.
 
 ## Citation
 
