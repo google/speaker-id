@@ -1,0 +1,4 @@
+numpy
+lingvo
+tensorflow-text
+absl-py

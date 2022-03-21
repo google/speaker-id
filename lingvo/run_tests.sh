@@ -12,7 +12,10 @@ fi
 pushd ${PROJECT_PATH}
 
 # Run tests.
-python3 attentive_scoring_layer_test.py
+for TEST_FILE in $(find . -name "*_test.py"); do
+    echo "Running tests in ${TEST_FILE}"
+    python3  ${TEST_FILE}
+done
 echo "All tests passed!"
 
 popd
