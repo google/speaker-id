@@ -1,9 +1,9 @@
-# Lingvo-based library for speaker and language recognition
+# Lingvo-based modules for speaker and language recognition
 
 ## Overview
 
 Here we open source some of the [Lingvo](https://github.com/tensorflow/lingvo)-based
-libraries used in our publications.
+modules used in our publications.
 
 ## Disclaimer
 
