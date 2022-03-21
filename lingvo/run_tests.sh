@@ -12,7 +12,6 @@ fi
 pushd ${PROJECT_PATH}
 
 # Run tests.
-# Run tests.
 for TEST_FILE in $(find . -name "*_test.py"); do
     echo "Running tests in ${TEST_FILE}"
     python3  ${TEST_FILE}
