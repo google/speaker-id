@@ -718,7 +718,7 @@ class GEnd2EndExtendedSetSoftmaxLayer(GEnd2EndSoftmaxLayer):
     return repeated_rows_matrix
 
   def _RefactorExtendedSetInput(self, score):
-    """Refactors the input score matrix into a convenient extended-set softmax form.
+    """Refactors the input score matrix into extended-set softmax form.
 
     Transform the scores such that the first column has the same-speaker
     scores and other columns have the (extended-set) different-speaker

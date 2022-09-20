@@ -105,5 +105,6 @@ class SVLUtilsTest(test_utils.TestCase):
 
       np.testing.assert_array_almost_equal(scores, expected_scores, decimal=4)
 
+
 if __name__ == '__main__':
   tf.test.main()
