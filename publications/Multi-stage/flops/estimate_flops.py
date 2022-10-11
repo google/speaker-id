@@ -16,7 +16,8 @@ def run_flops_spectral(N, D, autotune=True):
     Args:
         N: number of inputs
         D: input dimension
-        autotune: whether to use autotune or not
+        autotune: whether to use autotune or not,
+            see https://arxiv.org/abs/2003.02405
 
     Returns:
         FLOPs
