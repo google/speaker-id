@@ -68,7 +68,7 @@ def run_flops(N, D=256, L=INF, U1=INF, U2=INF, autotune=True):
         D: input dimension
         L: lower bound of main clusterer
         U1: upper bound of main clusterer
-        U2: upper bound of HAC
+        U2: upper bound of AHC
         autotune: whether spectral clusterer uses autotune
 
     Returns:
