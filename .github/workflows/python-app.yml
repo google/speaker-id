@@ -27,6 +27,7 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with flake8
       run: |
+        flake8 publications/*/*/*.py
         flake8 --indent-size 2 --max-line-length 80 lingvo
     - name: Run tests
       run: |
