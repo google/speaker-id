@@ -1,5 +1,6 @@
 """Script to estimate FLOPs of multi-stage clustering."""
 import os
+import copy
 import csv
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering
@@ -26,8 +27,12 @@ def run_flops_spectral(N, D, autotune=True):
         return 0
 
     X = np.random.rand(N, D)
-    clusterer = spectralcluster.configs.icassp2018_clusterer
-    if not autotune:
+    clusterer = copy.deepcopy(spectralcluster.configs.turntodiarize_clusterer)
+    if autotune:
+        clusterer.autotune.p_percentile_min = 0.8
+        clusterer.autotune.p_percentile_max = 0.95
+        clusterer.autotune.init_search_step = 0.01
+    else:
         clusterer.autotune = None
     high.start_counters([events.PAPI_FP_OPS, ])
     clusterer.predict(X)
@@ -104,8 +109,8 @@ def main():
     results = [["N", "D", "L", "U1", "U2", "autotune",
                 "fallback clusterer FLOPs", "main clusterer FLOPs",
                 "pre-clusterer FLOPs", "total FLOPs"]]
-    for autotune in [True, False]:
-        for N in [1000, 1500, 2000, 2500, 3000, 3500, 4000]:
+    for autotune in [False, True]:
+        for N in [1000, 1500, 2000, 2500]:
             results.append(run_flops(N=N, D=256, L=INF,
                            U1=INF, U2=INF, autotune=autotune))
             results.append(run_flops(N=N, D=256, L=0,  U1=INF,
