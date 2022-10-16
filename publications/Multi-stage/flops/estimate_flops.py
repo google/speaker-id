@@ -110,7 +110,7 @@ def main():
                 "fallback clusterer FLOPs", "main clusterer FLOPs",
                 "pre-clusterer FLOPs", "total FLOPs"]]
     for autotune in [False, True]:
-        for N in [1000, 1500, 2000, 2500]:
+        for N in [1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500]:
             results.append(run_flops(N=N, D=256, L=INF,
                            U1=INF, U2=INF, autotune=autotune))
             results.append(run_flops(N=N, D=256, L=0,  U1=INF,
