@@ -21,7 +21,7 @@ We include the full evaluation results including both the WDER and the modified 
 **Table 2**
 
 | Testsets         	| WDER Baseline 	| WDER Proposed 	|
-|------------------	|---------------	|---------------	|
+|:----------------:	|:-------------:	|:-------------:	|
 | Callhome         	| 10.3          	| 7.7           	|
 | Fisher           	| 3.6           	| 8.0           	|
 | AMI (modified)   	| 8.7           	| 50.0          	|
@@ -35,7 +35,7 @@ We include the full evaluation results including both the WDER and the modified 
 **Table 3**
 
 | Testsets         	| Short-form Lengths (s) 	| WDER Baseline (%) 	| WDER Proposed (%) 	|
-|------------------	|------------------------	|-------------------	|-------------------	|
+|:----------------:	|:----------------------:	|:-----------------:	|:-----------------:	|
 | Callhome         	| 30                     	| 13.6              	| 9.3               	|
 |                  	| 60                     	| 9.8               	| 8.9               	|
 |                  	| 120                    	| 10.5              	| 8.9               	|
@@ -56,7 +56,7 @@ We include the full evaluation results including both the WDER and the modified 
 AMI modified:
 
 | AMI<br>Lengths 	| Baseline<br>WDER 	|      	|      	|      	| Proposed<br>WDER 	|      	|      	|      	|
-|----------------	|------------------	|------	|------	|------	|------------------	|------	|------	|------	|
+|:--------------:	|:----------------:	|:----:	|:----:	|:----:	|:----------------:	|:----:	|:----:	|:----:	|
 |                	| 1spk             	| 2spk 	| 3spk 	| 4spk 	| 1spk             	| 2spk 	| 3spk 	| 4spk 	|
 | 30sec          	| 18.6             	| 10.0 	| 8.8  	| 8.4  	| 1.1              	| 5.8  	| 10.1 	| 15.5 	|
 | 60sec          	| 10.8             	| 6.3  	| 5.6  	| 6.9  	| 0.8              	| 5.2  	| 12.1 	| 17.1 	|
@@ -67,11 +67,29 @@ AMI modified:
 AMI unmodified:
 
 | AMI<br>Lengths 	| Baseline<br>WDER 	|      	|      	|      	| Proposed<br>WDER 	|      	|      	|      	|
-|----------------	|------------------	|------	|------	|------	|------------------	|------	|------	|------	|
+|:--------------:	|:----------------:	|:----:	|:----:	|:----:	|:----------------:	|:----:	|:----:	|:----:	|
 |                	| 1spk             	| 2spk 	| 3spk 	| 4spk 	| 1spk             	| 2spk 	| 3spk 	| 4spk 	|
 | 30sec          	| 18.5             	| 11.0 	| 11.9 	| 13.4 	| 1.1              	| 8.2  	| 16.1 	| 23.8 	|
 | 60sec          	| 10.8             	| 7.1  	| 8.6  	| 11.3 	| 0.8              	| 6.7  	| 17.5 	| 24.1 	|
 | 120sec         	| -                	| 6.9  	| 6.9  	| 13.2 	| -                	| 11.7 	| 20.4 	| 26.8 	|
 
 <br />
+
+**Table 5**
+
+| Intermediate<br>Layer Selection 	| Callhome 	| Fisher 	| Simulated 	| AMI Short<br>(modified) 	| AMI Short<br>(unmodified) 	|
+|---------------------------------	|:--------:	|:------:	|:---------:	|:-----------------------:	|:-------------------------:	|
+| 0th Conf layer (features)       	| 23.8     	| 24.5   	| 10.4      	| 22.8                    	| 28.1                      	|
+| 5th Conf layer (proposed)       	| 7.7      	| 8.0    	| 4.3       	| 14.0                    	| 19.9                      	|
+| 12th Conf layer (last)          	| 33.6     	| 37.3   	| 46.9      	| 27.5                    	| 32.5                      	|
+
+<br />
+
+**Table 6**
+
+| Model            	        | Callhome 	| Callhome Short 	| Fisher 	| Fisher Short 	| Simulated 	| AMI Short<br>(modified) 	| AMI Short<br>(unmodified) 	|
+|-------------------------- |:--------:	|:--------------:	|:------:	|:------------:	|:---------:	|:-----------------------:	|:-------------------------:	|
+| Proposed                 	| 7.7      	| 9.0            	| 8.0    	| 3.7          	| 4.3       	| 14.0                    	| 19.9                      	|
+| &nbsp;-simulated          | 11.6     	| 9.8            	| 12.3   	| 5.4          	| 22.2      	| 19.0                    	| 24.8                      	|
+| &nbsp;&nbsp;-30/60s segs 	| 28.8     	| 22.5           	| 22.1   	| 15.7         	| 26.8      	| 26.2                    	| 32.1                      	|
 
