@@ -8,10 +8,42 @@ This repository contains supplementary details and information to the "Towards W
 
 The Word Diarization Error Rate (WDER) reported in the paper follows "Joint Speech Recognition and Speaker Diarization via Sequence Transduction": https://arxiv.org/pdf/1907.05337.pdf. The metric is a word-level error metric without taking time boundaries into consideration, and it suits the word-level end-to-end diarization problem better.
 
-For AMI in the paper, we evaluate and report a modified WDER which does not count words that overlap with any other word in the ground truth. The pseudocode looks like this:
+For AMI in the paper, we evaluate and report a modified WDER which does not count words that overlap with any other word in the ground truth. Note that for AMI, *per-word* RTTM is avaiable.
 
-```
-TBA.
+The pseudocode looks like this:
+
+```Python
+''' Pseudo-code in Python for the modified WDER algorithm w/ ground truth metadata RTTM. '''
+
+# Align ref and hyp text. align() returns alignment tuples
+# of (i, j) indicating ith ref aligns with jth hyp. -1 values
+# indicate deletions or insertions.
+alignment = []
+for i, j in align(ref, hyp):
+  # Skip deletion or insertion.
+  if i == -1 or j == -1:
+    continue
+  alignment.append((i, j))
+
+# Assume annotations are sorted by start time.
+overlap_idx = set()
+prev_end = 0.0
+for i, rttm in enumerate(rttms):
+  if rttm.start < prev_end:
+    overlap_idx.add(i - 1)
+    overlap_idx.add(i)
+  prev_end = max(rttm.end, prev_end)
+
+updated_alignment = []
+for i, j in alignment:
+  # Save the ones that are not in the overlaps.
+  if i not in overlap_idx:
+    updated_alignment.append((i, j))
+alignment = updated_alignment
+
+# Use the updated alignment to find permutation invariant
+# distance, e.g. via Hungarian algorithm.
+...
 ```
 
 ## Full evaluation results
