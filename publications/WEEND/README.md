@@ -4,6 +4,28 @@
 
 This repository contains supplementary details and information to the "Towards Word-Level End-to-End Neural Speaker Diarization with Auxiliary Network" paper.
 
+## Baseline with inserted speaker tags
+
+We followed Shafey et al. [[1]](#1) and trained an RNN-T ASR model with augmented, inserted speaker tags. The training data was like this, with speaker labels re-formatted in an order-based manner **spk:N** :
+> How are you doing today **spk:1** I am good **spk:2** Great **spk:1**
+
+We reserved a few tokens from our 4096-sized WPM and used those to represent speakers 1-8:
+
+```
+(r'spk:1', '<addressnum>'),
+(r'spk:2', '</addressnum>'),
+(r'spk:3', '<app>'),
+(r'spk:4', '</app>'),
+(r'spk:5', '<apt>'),
+(r'spk:6', '</apt>'),
+(r'spk:7', '<areacode>'),
+(r'spk:8', '</areacode>'),
+```
+
+For evaluation, we converted those special tokens back to speaker labels and evaluated them the same way as the other models in the paper. Full results of this model, denoted as **BaselineTag**, are included in [the full evaluation results section](#full-evaluation-results).
+
+The results show that for generic speaker diarization task (instead of fixed role speaker classification problem), simply using inserted speaker tags does not work well. There is slight degradation of WER on public datasets and improvement of WER on simulated LibriSpeech datasets. WDER is very high across the board. Even on the easiest 2-speaker simulated testset, the model has over 10% WDER.
+
 ## WDER and modified WDER without overlapping words
 
 The Word Diarization Error Rate (WDER) reported in the paper follows "Joint Speech Recognition and Speaker Diarization via Sequence Transduction": https://arxiv.org/pdf/1907.05337.pdf. The metric is a word-level error metric without taking time boundaries into consideration, and it suits the word-level end-to-end diarization problem better.
@@ -50,17 +72,32 @@ alignment = updated_alignment
 
 We include the full evaluation results including both the WDER and the modified WDER on AMI.
 
-**Table 2**
+**Table 2 WER (S/D/I)**
 
-| Testsets         	| WDER Baseline 	| WDER Proposed 	|
-|:----------------:	|:-------------:	|:-------------:	|
-| Callhome         	| 10.3          	| 7.7           	|
-| Fisher           	| 3.6           	| 8.0           	|
-| AMI (modified)   	| 8.7           	| 50.0          	|
-| AMI (unmodified) 	| 11.8          	| 52.3          	|
-| Sim 2spk         	| 4.2           	| 4.1           	|
-| Sim 3spk         	| 4.2           	| 3.6           	|
-| Sim 4spk         	| 4.5           	| 5.1           	|
+| Testsets         	| WER BaselineTag 	| WER Baseline 		| WER Proposed 		|
+|:----------------:	|:-------------:	|:-------------:	|:-------------:	|
+| Callhome         	| 47.2 (14.3/5.3/27.6)	| 45.9 (12.8/9.7/23.3)  | 45.9 (12.8/9.7/23.3)  |
+| Fisher           	| 25.1 (8.4/14.0/2.7)	| 20.5 (8.7/10.4/1.4)   | 20.5 (8.7/10.4/1.4)   |
+| AMI		   	| 77.6 (3.3/73.8/0.5)	| 29.6 (8.9/19.9/0.8)	| 29.6 (8.9/19.9/0.8)	|
+| Sim 2spk         	| 6.4 (5.0/0.7/0.7)	| 8.1 (6.4/1.0/0.7)	| 8.1 (6.4/1.0/0.7)	|
+| Sim 3spk         	| 6.3 (5.1/0.6/0.7) 	| 8.3 (6.5/1.0/0.8)	| 8.3 (6.5/1.0/0.8)	|
+| Sim 4spk         	| 6.4 (5.1/0.6/0.7)    	| 8.1 (6.4/1.0/0.7)	| 8.1 (6.4/1.0/0.7)	|
+
+Note: **WER BaselineTag** deletion error on AMI is super high. This is because without too much tuning, our trained model has a relatively high probability to give up decoding and return empty hypothesis text if the audio gets extremely long. This issue is only observed on AMI testset.
+
+<br />
+
+**Table 2 WDER**
+
+| Testsets         	| WDER BaselineTag 	| WDER Baseline 	| WDER Proposed 	|
+|:----------------:	|:-------------:	|:-------------:	|:-------------:	|
+| Callhome         	| 39.4          	| 10.3          	| 7.7           	|
+| Fisher           	| 41.5           	| 3.6           	| 8.0           	|
+| AMI (modified)   	| 62.8           	| 8.7           	| 50.0          	|
+| AMI (unmodified) 	| 61.1          	| 11.8          	| 52.3          	|
+| Sim 2spk         	| 11.9           	| 4.2           	| 4.1           	|
+| Sim 3spk         	| 16.7           	| 4.2           	| 3.6           	|
+| Sim 4spk         	| 27.0           	| 4.5           	| 5.1           	|
 
 <br />
 
@@ -125,3 +162,6 @@ AMI unmodified:
 | &nbsp;-simulated          | 11.6     	| 9.8            	| 12.3   	| 5.4          	| 22.2      	| 19.0                    	| 24.8                      	|
 | &nbsp;&nbsp;-30/60s segs 	| 28.8     	| 22.5           	| 22.1   	| 15.7         	| 26.8      	| 26.2                    	| 32.1                      	|
 
+
+## References
+<a id="1">[1]</a> Laurent El Shafey et al., “Joint speech recognition and speaker diarization via sequence transduction,” in Interspeech, 2019, pp. 396–400.
