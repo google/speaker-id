@@ -24,7 +24,7 @@ We reserved a few tokens from our 4096-sized WPM and used those to represent spe
 
 For evaluation, we converted those special tokens back to speaker labels and evaluated them the same way as the other models in the paper. Full results of this model, denoted as **BaselineTag**, are included in [the full evaluation results section](#full-evaluation-results).
 
-The results show that for generic speaker diarization task (instead of fixed role speaker classification problem), simply using inserted speaker tags does not work well. There is slight degradation of WER on public datasets and improvement of WER on simulated LibriSpeech datasets. WDER is very high across the board. Even on the easiest 2-speaker simulated testset, the model has over 10% WDER.
+The results show that for generic speaker diarization task (instead of fixed role speaker classification problem), simply using inserted speaker tags does not work well. There is a slight degradation of WER on public datasets but small improvement on simulated LibriSpeech datasets. This is because the baseline RNN-T ASR model was not pre-trained on LibriSpeech, but in our ASR-diarization training, there were a large number of simulated utterances from LibriSpeech. Meanwhile, WDER is very high across the board. Even on the easiest 2-speaker simulated testset, the model has over 10% WDER.
 
 ## WDER and modified WDER without overlapping words
 
