@@ -15,6 +15,7 @@ If you are interested in using our products:
 * Start using [Cloud Speaker ID](https://cloud.google.com/speaker-id) ([Blog](https://cloud.google.com/blog/products/ai-machine-learning/google-cloud-announces-speaker-id))
 * [Use multilingual Assistant](https://support.google.com/assistant/answer/7394513) ([Blog](https://ai.googleblog.com/2018/08/Multilingual-Google-Assistant.html))
 * [Use multilingual cloud speech-to-text](https://cloud.google.com/speech-to-text/docs/multiple-languages)
+* [Enable speaker labels in the Recorder app](https://support.google.com/pixelphone/answer/9516618?hl=en#zippy=%2Clabel-when-different-people-are-speaking-in-a-recording-pixel-later-including-fold) ([Blog](https://blog.research.google/2022/12/who-said-what-recorders-on-device.html))
 
 ## Code
 
