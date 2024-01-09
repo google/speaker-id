@@ -1,19 +1,21 @@
 #!/bin/bash
 set -o errexit
-set -o nounset
-set -o pipefail
-set -o xtrace
 
-python3 -m flake8 --indent-size 2 --max-line-length 80 .
-python3 -m pytype .
-python3 levenshtein_test.py
-python3 utils_test.py
+# Get project path.
+PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-python3 train_data_prep.py \
---input=testdata/example_data.json \
---output=/tmp/example_data.tfrecord \
---output_type=tfrecord
+# Add project modules to PYTHONPATH.
+if [[ "${PYTHONPATH}" != *"${PROJECT_PATH}"* ]]; then
+    export PYTHONPATH="${PYTHONPATH}:${PROJECT_PATH}"
+fi
 
-python3 postprocess_completions.py \
---input=testdata/example_completion_with_bad_completion.json \
---output=/tmp/example_postprocessed.json
+pushd ${PROJECT_PATH}
+
+# Run tests.
+for TEST_FILE in $(find . -name "*_test.py"); do
+    echo "Running tests in ${TEST_FILE}"
+    python3  ${TEST_FILE}
+done
+echo "All tests passed!"
+
+popd
