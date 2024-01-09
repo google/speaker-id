@@ -17,12 +17,20 @@ If you are interested in using our products:
 * [Use multilingual cloud speech-to-text](https://cloud.google.com/speech-to-text/docs/multiple-languages)
 * [Enable speaker labels in the Recorder app](https://support.google.com/pixelphone/answer/9516618?hl=en#zippy=%2Clabel-when-different-people-are-speaking-in-a-recording-pixel-later-including-fold) ([Blog](https://blog.research.google/2022/12/who-said-what-recorders-on-device.html))
 
-## Code
+## Code [![Python application](https://github.com/google/speaker-id/actions/workflows/python-app.yml/badge.svg)](https://github.com/google/speaker-id/actions/workflows/python-app.yml)
+
+### Lingvo
 
 We open source some of the [Lingvo](https://github.com/tensorflow/lingvo)-based
 modules used in our publications.
 
 Please see [`lingvo/README.md`](https://github.com/google/speaker-id/blob/master/lingvo/README.md) for more details.
+
+### DiarizationLM
+
+We open source some functions and tools used in the [DiarizationLM paper](https://arxiv.org/abs/2401.03506).
+
+Please see [`DiarizationLM/README.md`](https://github.com/google/speaker-id/blob/master/DiarizationLM/README.md) for more details.
 
 ## Pages
 
