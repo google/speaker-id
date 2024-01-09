@@ -7,6 +7,8 @@ set -o xtrace
 # Get project path.
 PROJECT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+pushd ${PROJECT_PATH}
+
 python3 train_data_prep.py \
 --input=testdata/example_data.json \
 --output=/tmp/example_data.tfrecord \
