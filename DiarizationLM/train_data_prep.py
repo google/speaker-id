@@ -36,6 +36,11 @@ flags.DEFINE_string("prompt_prefix", "", "Prefix of the input")
 flags.DEFINE_string("prompt_suffix", " --> ", "Suffix of the input")
 flags.DEFINE_string("completion_suffix", "", "Suffix of the output")
 flags.DEFINE_string(
+    "speaker_prefix",
+    "<speaker:",
+    "Prefix of the speaker token")
+flags.DEFINE_string("speaker_suffix", ">", "Suffix of the speaker token")
+flags.DEFINE_string(
     "input_feature_key",
     "inputs",
     "This is the input feature key for the LLM prompt in the output type.",
@@ -55,6 +60,8 @@ def main(argv: Sequence[str]) -> None:
       prompt_prefix=FLAGS.prompt_prefix,
       prompt_suffix=FLAGS.prompt_suffix,
       completion_suffix=FLAGS.completion_suffix,
+      speaker_prefix=FLAGS.speaker_prefix,
+      speaker_suffix=FLAGS.speaker_suffix,
   )
 
   reader = utils.JsonUtteranceReader(
