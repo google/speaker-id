@@ -34,7 +34,7 @@ In the paper, we mentioned two representations:
 We provide the functions in `utils.py` to convert between these two representations:
 
 * `create_diarized_text()` converts the word and speaker sequences to the pure text representation.
-* `extract_text_and_spk()` converts the pure text reprensentation to the word and speaker sequences.
+* `extract_text_and_spk()` converts the pure text representation to the word and speaker sequences.
 
 ### Transcript-preserving speaker transfer (TPST)
 
