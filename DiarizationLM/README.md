@@ -12,6 +12,8 @@ Here we open source some functions and tools used in the [DiarizationLM paper](h
 
 ## Instructions
 
+![img](resources/diagram.png)
+
 ### Data format
 
 We assume all internal data are stored in JSON files. An example is `testdata/example_data.json`. The field `"utterances"` stores a list of utterances, and in each utterance we have these string fields:
@@ -31,6 +33,14 @@ In the paper, we mentioned two representations:
 1. The word sequence and speaker sequence representation.
 2. The pure text representation.
 
+Example:
+
+```
+Word sequence:         ["good", "morning", "how", "are", "you"]
+Speaker sequence:      [1, 1, 2, 2, 2]
+Text representation:   "<spk:1> good morning <spk:2> how are you"
+```
+
 We provide the functions in `utils.py` to convert between these two representations:
 
 * `create_diarized_text()` converts the word and speaker sequences to the pure text representation.
@@ -47,6 +57,8 @@ def transcript_preserving_speaker_transfer(
     src_text: str, src_spk: str, tgt_text: str, tgt_spk: str
 ) -> str
 ```
+
+![img](resources/TPST_algorithm.png)
 
 ### Training data preparation
 
@@ -80,6 +92,28 @@ python3 train_data_prep.py \
 --input_feature_key="prompt" \
 --output_feature_key="completion"
 ```
+
+### LLM finetuning and inference
+
+> **Warning: This step is very costly! Proceed with caution at your own risk. Also GPT models are very different from PaLM models. Reproducibility is not guaranteed!**
+
+In our paper, we used Google's internal tools to finetune PaLM 2 models and to run the model inference. Google's policy does not allow us to disclose any details about the tools and the PaLM 2 models.
+
+However, if you are interested in reproducing some of our experiments, one option is to use other alternative LLMs, such as OpenAI's GPT models.
+
+Using the `train_data_prep.py` tool mentioned above, you can create `csv` files, and use OpenAI libraries to convert to the jsonl format. Example command:
+
+```
+openai tools fine_tunes.prepare_data -f train_data.csv
+```
+
+Once you have the training data in jsonl format, you can finetune GPT models with the data, either via the API or using OpenAI's web UI. For example:
+
+```
+openai api fine_tunes.create -t "train_data.jsonl"
+```
+
+After you have finetuned a model, we provide a Python script `run_finetuned_gpt.py` to run the GPT model inference on testing data. You need to provide your `--api_key` and `--engine` to the script.
 
 ### Completion parser
 
