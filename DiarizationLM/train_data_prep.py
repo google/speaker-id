@@ -14,7 +14,7 @@ flags.DEFINE_string("output", "/tmp/output", "Output file.")
 flags.DEFINE_enum(
     "output_type",
     "tfrecord",
-    ["tfrecord", "json", "csv"],
+    ["tfrecord", "json", "csv", "jsonl"],
     "Output container formats for different use cases.",
 )
 flags.DEFINE_string("text_field", "hyp_text", "Name of field to get text")
@@ -100,6 +100,13 @@ def main(argv: Sequence[str]) -> None:
       csv_lines.append('"{}","{}"'.format(prompt, target))
     with open(FLAGS.output, "wt") as f:
       f.write("\n".join(csv_lines))
+  elif FLAGS.output_type == "jsonl":
+    json_lines = []
+    for _, prompt, target in reader.generate_data_tuple():
+      json_lines.append('{{"{}":"{}","{}":"{}"}}'.format(
+          FLAGS.input_feature_key, prompt, FLAGS.output_feature_key, target))
+    with open(FLAGS.output, "wt") as f:
+      f.write("\n".join(json_lines))
 
   print("Output has been written to:", FLAGS.output)
 

@@ -75,16 +75,17 @@ We support 3 different output file formats:
 | Format | Description |
 | ------ | ----------- |
 | `tfrecord` | The [TFRecord format](https://www.tensorflow.org/tutorials/load_data/tfrecord) can be used by various machine learning libraries.|
-| `csv` | This format can be used by [OpenAI API](https://platform.openai.com/docs/api-reference/) for finetuning GPT models. OpenAI will usually convert these csv files to jsonl files.|
 | `json` | This format is more human readable and can be used for debugging. It's also useful for finetuning PaLM models via the [Google Cloud API](https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-text-models-supervised#text).|
+| `csv` | This format can be used by many existing tools. OpenAI also provides a tool to convert csv files to jsonl files.|
+| `jsonl` | This format can be directly used by the [OpenAI API](https://platform.openai.com/docs/api-reference/) for finetuning GPT models.|
 
 Example command:
 
 ```bash
 python3 train_data_prep.py \
 --input="testdata/example_data.json" \
---output="/tmp/example_data.csv" \
---output_type=csv \
+--output="/tmp/example_data.jsonl" \
+--output_type=jsonl \
 --emit_input_length=1000 \
 --emit_target_length=1000 \
 --prompt_suffix=" --> " \
