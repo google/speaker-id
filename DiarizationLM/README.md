@@ -21,8 +21,8 @@ We assume all internal data are stored in JSON files. An example is `testdata/ex
 | Field | Description |
 | ----- | ----------- |
 | `"utterance_id"` | This stores the utterance ID.|
-| `"hyp_text"` | This stores the sequence of hypothesis words, but joined but spaces.|
-| `"hyp_spk"` | This stores the sequence of hypothesis speakers, but joined but spaces.|
+| `"hyp_text"` | This stores the sequence of hypothesis words, but joined by spaces.|
+| `"hyp_spk"` | This stores the sequence of hypothesis speakers, but joined by spaces.|
 | `"hyp_diarized_text"` | This is the text representation of the hypothesis words and speakers. It can be used for debugging and to build the prompts to LLM.|
 | `"ref_*"` | Similar to the `"hyp_*"` fields, but these are ground truth reference, rather than hypothesis.|
 
