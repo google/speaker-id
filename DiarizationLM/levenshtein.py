@@ -28,7 +28,7 @@ def levenshtein_with_edits(
   s2 = hyp.split(delimiter)
   n1 = len(s1)
   n2 = len(s2)
-  costs = np.zeros((n1+1, n2+1), dtype=np.int8)
+  costs = np.zeros((n1+1, n2+1), dtype=np.int32)
   backptr = np.zeros((n1+1, n2+1), dtype=EditOp)
 
   for i in range(n1+1):  # ref
