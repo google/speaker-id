@@ -1,6 +1,9 @@
 # DiarizationLM
 
 [![Python application](https://github.com/google/speaker-id/actions/workflows/python-app-diarizationlm.yml/badge.svg)](https://github.com/google/speaker-id/actions/workflows/python-app-diarizationlm.yml)
+[![PyPI Version](https://img.shields.io/pypi/v/diarizationlm.svg)](https://pypi.python.org/pypi/diarizationlm)
+[![Python Versions](https://img.shields.io/pypi/pyversions/diarizationlm.svg)](https://pypi.org/project/diarizationlm)
+[![Downloads](https://static.pepy.tech/badge/diarizationlm)](https://www.pepy.tech/projects/diarizationlm)
 
 ## Overview
 
