@@ -33,5 +33,6 @@ jobs:
         pytype DiarizationLM
     - name: Run tests
       run: |
+        pip install codecov
         bash DiarizationLM/run_tests.sh
         bash DiarizationLM/run_tools.sh
