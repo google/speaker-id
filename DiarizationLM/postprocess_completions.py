@@ -10,7 +10,7 @@ import json
 from absl import app
 from absl import flags
 
-import utils
+from diarizationlm import utils
 
 
 FLAGS = flags.FLAGS
