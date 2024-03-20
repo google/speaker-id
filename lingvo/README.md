@@ -1,5 +1,7 @@
 # Lingvo-based modules for speaker and language recognition
 
+[![Python application](https://github.com/google/speaker-id/actions/workflows/python-app-lingvo.yml/badge.svg)](https://github.com/google/speaker-id/actions/workflows/python-app-lingvo.yml)
+
 ## Overview
 
 Here we open source some of the [Lingvo](https://github.com/tensorflow/lingvo)-based
