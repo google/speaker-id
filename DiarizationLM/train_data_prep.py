@@ -5,7 +5,7 @@ from absl import app
 from absl import flags
 import json
 import tensorflow as tf
-import utils
+from diarizationlm import utils
 
 
 FLAGS = flags.FLAGS

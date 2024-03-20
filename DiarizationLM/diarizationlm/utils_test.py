@@ -29,9 +29,9 @@ class UtilsTest(unittest.TestCase):
     tgt_text = "hello morning hi hey are you be good"
     tgt_spk = "1 2 2 2 1 1 2 1"
     expected = "1 1 2 2 2 2 1 1"
-    transfered_spk = utils.transcript_preserving_speaker_transfer(
+    transferred_spk = utils.transcript_preserving_speaker_transfer(
         src_text, src_spk, tgt_text, tgt_spk)
-    self.assertEqual(expected, transfered_spk)
+    self.assertEqual(expected, transferred_spk)
 
   def test_ref_to_oracle(self):
     test_data = {

@@ -19,6 +19,28 @@ Here we open source some functions and tools used in the [DiarizationLM paper](h
 
 ![img](resources/diagram.png)
 
+### Install the package
+
+You can install the package with:
+
+```
+pip install diarizationlm
+```
+
+Once installed, you can directly use many of the existing functions from the package. For example:
+
+```python
+import diarizationlm
+
+src_text = "hello good morning hi how are you pretty good"
+src_spk = "1 1 1 2 2 2 2 1 1"
+tgt_text = "hello morning hi hey are you be good"
+tgt_spk = "1 2 2 2 1 1 2 1"
+transferred_spk = diarizationlm.transcript_preserving_speaker_transfer(
+    src_text, src_spk, tgt_text, tgt_spk)
+print(transferred_spk)
+```
+
 ### Data format
 
 We assume all internal data are stored in JSON files. An example is `testdata/example_data.json`. The field `"utterances"` stores a list of utterances, and in each utterance we have these string fields:
@@ -46,7 +68,7 @@ Speaker sequence:      [1, 1, 2, 2, 2]
 Text representation:   "<spk:1> good morning <spk:2> how are you"
 ```
 
-We provide the functions in `utils.py` to convert between these two representations:
+We provide the functions in `diarizationlm/utils.py` to convert between these two representations:
 
 * `create_diarized_text()` converts the word and speaker sequences to the pure text representation.
 * `extract_text_and_spk()` converts the pure text representation to the word and speaker sequences.
@@ -55,7 +77,7 @@ We provide the functions in `utils.py` to convert between these two representati
 
 TPST is a critical data processing algorithm used in multiple places in our paper.
 
-A Python implementation is available in `utils.py`, defined as:
+A Python implementation is available in `diarizationlm/utils.py`, defined as:
 
 ```Python
 def transcript_preserving_speaker_transfer(

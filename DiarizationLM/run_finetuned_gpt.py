@@ -5,7 +5,7 @@ import json
 from absl import app
 from absl import flags
 import openai
-import utils
+from diarizationlm import utils
 
 FLAGS = flags.FLAGS
 flags.DEFINE_string("api_key", "", "Your OpenAI API key")
