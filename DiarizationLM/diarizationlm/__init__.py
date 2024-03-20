@@ -1,7 +1,7 @@
 """__init__ file."""
 
-from .. import levenshtein
-from .. import utils
+from . import levenshtein
+from . import utils
 
 levenshtein_with_edits = levenshtein.levenshtein_with_edits
 PromptOptions = utils.PromptOptions
