@@ -1,7 +1,7 @@
 """Test utils."""
 import os
 import unittest
-import utils
+from diarizationlm import utils
 
 
 class UtilsTest(unittest.TestCase):

@@ -1,6 +1,6 @@
 """Test levenshterin."""
 import unittest
-import levenshtein
+from diarizationlm import levenshtein
 
 
 class LevenshteinTest(unittest.TestCase):
