@@ -4,6 +4,7 @@
 [![PyPI Version](https://img.shields.io/pypi/v/diarizationlm.svg)](https://pypi.python.org/pypi/diarizationlm)
 [![Python Versions](https://img.shields.io/pypi/pyversions/diarizationlm.svg)](https://pypi.org/project/diarizationlm)
 [![Downloads](https://static.pepy.tech/badge/diarizationlm)](https://www.pepy.tech/projects/diarizationlm)
+[![codecov](https://codecov.io/gh/google/speaker-id/branch/master/graph/badge.svg)](https://codecov.io/gh/google/speaker-id)
 
 ## Overview
 

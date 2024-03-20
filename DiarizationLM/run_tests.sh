@@ -20,6 +20,6 @@ for TEST_FILE in $(find . -name "*_test.py"); do
 done
 echo "All tests passed!"
 
-popd
-
 python3 -m codecov
+
+popd
