@@ -1,5 +1,7 @@
 # DiarizationLM
 
+[![Python application](https://github.com/google/speaker-id/actions/workflows/python-app-diarizationlm.yml/badge.svg)](https://github.com/google/speaker-id/actions/workflows/python-app-diarizationlm.yml)
+
 ## Overview
 
 Here we open source some functions and tools used in the [DiarizationLM paper](https://arxiv.org/abs/2401.03506).
