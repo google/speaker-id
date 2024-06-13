@@ -267,6 +267,11 @@ class JsonUtteranceReader:
     for utt in self.generate_utts():
       yield from self.generate_data_tuple_for_utt(utt)
 
+  def generate_data_dict(self) -> Generator[dict[str, str], None, None]:
+    """Generate a dict that can be used for datasets.Dataset.from_generator."""
+    for uttid, prompt, target in self.generate_data_tuple():
+      yield {"uttid": uttid, "prompt": prompt, "target": target}
+
   def generate_data_tuple_for_utt(
       self, utt: dict[str, str]
   ) -> Generator[tuple[str, str, str], None, None]:
