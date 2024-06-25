@@ -475,3 +475,29 @@ def postprocess_completions_for_utt(
       tgt_text=utt[hyp_text_field],
       tgt_spk=utt[hyp_spk_field],
   )
+
+
+def transfer_llm_completion(
+    llm_completion: str,
+    hyp: str,
+    po: PromptOptions = PromptOptions(),
+) -> str:
+  """Transfer the LLM completion text to use text from hypothesis."""
+  llm_text, llm_speaker = extract_text_and_spk(
+      llm_completion, po=po
+  )
+  hyp_text, hyp_speaker = extract_text_and_spk(
+      hyp, po=po
+  )
+  transfered_llm_speaker = transcript_preserving_speaker_transfer(
+      src_text=llm_text,
+      src_spk=llm_speaker,
+      tgt_text=hyp_text,
+      tgt_spk=hyp_speaker,
+  )
+  transferred = create_diarized_text(
+      word_labels=hyp_text.split(),
+      speaker_labels=transfered_llm_speaker.split(),
+      po=po,
+  )
+  return transferred
