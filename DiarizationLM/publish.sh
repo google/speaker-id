@@ -16,7 +16,7 @@ rm -rf dist
 rm -rf diarizationlm.egg-info
 
 # build and upload
-python3 setup.py sdist bdist_wheel
-python3 -m twine upload dist/* --verbose
+/usr/local/google/home/quanw/venv/bin/python3 setup.py sdist bdist_wheel
+/usr/local/google/home/quanw/venv/bin/python3 -m twine upload dist/* --verbose
 
 popd
