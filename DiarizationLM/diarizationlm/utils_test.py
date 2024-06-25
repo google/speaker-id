@@ -2,6 +2,7 @@
 import os
 import unittest
 from diarizationlm import utils
+import datasets
 
 
 class UtilsTest(unittest.TestCase):
@@ -485,6 +486,32 @@ class UtilsTest(unittest.TestCase):
     self.assertEqual(len(keys), 195)
     self.assertEqual("en_0638_seg0", keys[0])
     self.assertEqual("en_0638_seg1", keys[1])
+
+  def test_dataset_from_generator(self):
+    json_file = os.path.join(
+        "testdata/example_data.json"
+    )
+    # The length limit for both prompt and target.
+    max_len = 150
+    po = utils.PromptOptions(
+        emit_input_length=max_len,
+        emit_target_length=max_len,
+        prompt_prefix="",
+        prompt_suffix=" --> ",
+        completion_suffix=" END",
+        speaker_prefix="<s:",
+        speaker_suffix=">",
+    )
+    reader = utils.JsonUtteranceReader(
+        json_files=json_file,
+        text_field="hyp_text",
+        input_speaker_field="hyp_spk",
+        target_speaker_field="hyp_spk_oracle",
+        po=po,
+    )
+    ds = datasets.Dataset.from_generator(reader.generate_data_dict)
+    entry = ds[0]
+    self.assertEqual(entry["uttid"], "en_0638_seg0")
 
   def test_find_utt_dict(self):
     data_dict = {

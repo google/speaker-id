@@ -11,11 +11,15 @@ fi
 
 pushd ${PROJECT_PATH}
 
+rm -f .coverage
+
 # Run tests.
 for TEST_FILE in $(find . -name "*_test.py"); do
     echo "Running tests in ${TEST_FILE}"
-    python3  ${TEST_FILE}
+    python3 -m coverage run -a ${TEST_FILE}
 done
 echo "All tests passed!"
+
+python3 -m codecov
 
 popd

@@ -3,3 +3,4 @@ scipy
 tensorflow-text
 absl-py
 openai
+datasets
