@@ -30,7 +30,8 @@ jobs:
         flake8 --indent-size 2 --max-line-length 80 DiarizationLM
     - name: pytype
       run: |
-        pytype DiarizationLM
+        pytype DiarizationLM/*.py
+        pytype DiarizationLM/diarizationlm
     - name: Run tests
       run: |
         pip install codecov
