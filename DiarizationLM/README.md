@@ -124,7 +124,7 @@ python3 train_data_prep.py \
 --output_feature_key="completion"
 ```
 
-### LLM finetuning and inference
+### LLM finetuning and inference (OpenAI)
 
 > **Warning: This step is very costly! Proceed with caution at your own risk. Also GPT models are very different from PaLM models. Reproducibility is not guaranteed!**
 
@@ -145,6 +145,12 @@ openai api fine_tunes.create -t "train_data.jsonl"
 ```
 
 After you have finetuned a model, we provide a Python script `run_finetuned_gpt.py` to run the GPT model inference on testing data. You need to provide your `--api_key` and `--engine` to the script.
+
+### LLM finetuning and inference (Llama 2)
+
+We open sourced Llama 2 based models on Hugging Face: https://huggingface.co/google/DiarizationLM-13b-Fisher-v1
+
+The scripts to finetune this model is available in the `unsloth` folder.
 
 ### Completion parser
 
