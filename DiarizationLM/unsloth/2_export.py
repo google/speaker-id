@@ -8,9 +8,6 @@ from unsloth import FastLanguageModel
 def export_models(
     save_lora=True,
     save_16bit=True,
-    save_4bit=False,
-    save_gguf=False,
-    save_4bit_gguf=True,
 ):
   ############################################################################
   # Get model
@@ -39,33 +36,6 @@ def export_models(
         os.path.join(config.MODEL_ID, "model"),
         tokenizer,
         save_method="merged_16bit",
-    )
-
-  if save_4bit:
-    # Note: This model current has problems.
-    # Error: "does not contain `bitsandbytes__*` and possibly other
-    # `quantized_stats` components."
-    print("Saving 4bit model...")
-    model.save_pretrained_merged(
-        os.path.join(config.MODEL_ID, "4bit_model"),
-        tokenizer,
-        save_method="merged_4bit_forced",
-    )
-
-  if save_gguf:
-    print("Saving GGUF model...")
-    model.save_pretrained_gguf(
-        os.path.join(config.MODEL_ID, "model"),
-        tokenizer,
-        quantization_method="f16",
-    )
-
-  if save_4bit_gguf:
-    print("Saving 4-bit GGUF model...")
-    model.save_pretrained_gguf(
-        os.path.join(config.MODEL_ID, "model"),
-        tokenizer,
-        quantization_method="q4_k_m",
     )
 
 
