@@ -33,17 +33,22 @@ def build_dataset_single_source(input_file: str):
   )
   dataset1 = Dataset.from_generator(reader_hyp2ora.generate_data_dict)
   dataset2 = Dataset.from_generator(reader_deg2ref.generate_data_dict)
-  dataset = interleave_datasets([dataset1, dataset2])
-  dataset = dataset.map(formatting_prompts_func)
-  return dataset
+  return [dataset1, dataset2]
 
 
 def build_dataset():
+  disable_caching()
   all_datasets = []
+  all_probs = []
   for data_name in config.TRAINING_INPUT:
-    all_datasets.append(
-        build_dataset_single_source(config.TRAINING_INPUT[data_name])
-    )
-  dataset = interleave_datasets(all_datasets)
+    data_path, data_prob = config.TRAINING_INPUT[data_name]
+    all_datasets.extend(build_dataset_single_source(data_path))
+    all_probs.extend([data_prob] * 2)
+  prob_sum = sum(all_probs)
+  all_probs = [prob / prob_sum for prob in all_probs]
+  dataset = interleave_datasets(all_datasets,
+                                probabilities=all_probs,
+                                stopping_strategy="all_exhausted")
   dataset = dataset.shuffle(seed=42)
+  dataset = dataset.map(formatting_prompts_func)
   return dataset
