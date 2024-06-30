@@ -54,7 +54,6 @@ def run_inference(input_file: str, output_dir: str):
     for prompt in prompts:
       utt["completions"].append(get_completion(prompt, model, tokenizer))
 
-
   with open(os.path.join(output_dir, "final.json"), "wt") as f:
     json.dump(data_dict, f, indent=2)
   print("Final output JSON file written to:", output_dir)
