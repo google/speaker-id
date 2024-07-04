@@ -206,7 +206,7 @@ def create_diarized_text(
 
 
 def extract_text_and_spk(
-    completions: str, po: PromptOptions
+    completions: str, po: PromptOptions, skip_meaningless_speaker: bool = True
 ) -> tuple[str, str]:
   """Extract the text and spk from the completions string."""
   spk = "1"
@@ -224,9 +224,12 @@ def extract_text_and_spk(
         if not spk or spk_int < 1 or spk_int > 10:
           raise ValueError("Seeing unexpected word: ", word)
         previous_spk = spk
-      except ValueError:
-        print("Skipping meaningless speaker token:", word)
-        spk = previous_spk
+      except ValueError as exc:
+        if skip_meaningless_speaker:
+          print("Skipping meaningless speaker token:", word)
+          spk = previous_spk
+        else:
+          raise exc
     else:
       result_text.append(word)
       result_spk.append(spk)
