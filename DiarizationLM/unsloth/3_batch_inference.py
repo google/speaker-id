@@ -61,6 +61,7 @@ def run_inference(input_file: str, output_dir: str):
 
 if __name__ == "__main__":
   for eval_dataset in config.EVAL_INPUTS:
+    print("Running inference on:", eval_dataset)
     eval_input = config.EVAL_INPUTS[eval_dataset]
     output_dir = os.path.join(
         config.MODEL_ID,
