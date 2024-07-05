@@ -4,3 +4,4 @@ tensorflow-text
 absl-py
 openai
 datasets
+tqdm

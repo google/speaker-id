@@ -26,4 +26,8 @@ python3 postprocess_completions.py \
 --input=testdata/example_completion_with_bad_completion.json \
 --output=/tmp/example_postprocessed.json
 
+python3 compute_metrics_on_json.py \
+--input=testdata/example_data.json \
+--output=/tmp/example_metrics.json
+
 popd

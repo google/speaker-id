@@ -2,6 +2,7 @@
 
 from . import levenshtein
 from . import utils
+from . import metrics
 
 levenshtein_with_edits = levenshtein.levenshtein_with_edits
 PromptOptions = utils.PromptOptions
@@ -14,3 +15,6 @@ extract_text_and_spk = utils.extract_text_and_spk
 JsonUtteranceReader = utils.JsonUtteranceReader
 generate_prompts = utils.generate_prompts
 postprocess_completions_for_utt = utils.postprocess_completions_for_utt
+UtteranceMetrics = metrics.UtteranceMetrics
+compute_utterance_metrics = metrics.compute_utterance_metrics
+compute_metrics_on_json_dict = metrics.compute_metrics_on_json_dict
