@@ -8,7 +8,7 @@ import datasets
 class UtilsTest(unittest.TestCase):
 
   def test_normalize_text(self):
-    text = "Hello, HI, how_are_you. Good."
+    text = "Hello,  HI, \"how_are_you?\" Good."
     expected = "hello hi howareyou good"
     self.assertEqual(expected, utils.normalize_text(text))
 

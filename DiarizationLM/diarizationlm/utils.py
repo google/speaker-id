@@ -11,6 +11,8 @@ from scipy import optimize
 
 from diarizationlm import levenshtein
 
+PUNCTUATIONS = [",", ".", "_", "?", "!", "-", '"', "'"]
+
 
 @dataclasses.dataclass
 class PromptOptions:
@@ -38,16 +40,16 @@ class PromptOptions:
 def normalize_text(text: str) -> str:
   """Normalize text."""
   # Convert to lower case.
-  text_lower = text.lower()
+  text_lower = text.lower().strip()
+
   # Remove punctuation.
-  text_de_punt = (
-      text_lower.replace(",", "").replace(".", "").replace("_", "").strip()
-  )
-  if len(text_lower.split()) == len(text_de_punt.split()):
-    return text_de_punt
-  else:
+  for punc in PUNCTUATIONS:
+    text_de_punt = text_lower.replace(punc, "")
     # If ater removing punctuation, we dropped words, then we keep punctuation.
-    return text_lower
+    if len(text_lower.split()) == len(text_de_punt.split()):
+      text_lower = text_de_punt
+
+  return " ".join(text_lower.split())
 
 
 def speakers_transform(speakers: Sequence[str]) -> list[str]:
