@@ -5,6 +5,24 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/diarizationlm.svg)](https://pypi.org/project/diarizationlm)
 [![Downloads](https://static.pepy.tech/badge/diarizationlm)](https://www.pepy.tech/projects/diarizationlm)
 [![codecov](https://codecov.io/gh/google/speaker-id/branch/master/graph/badge.svg)](https://codecov.io/gh/google/speaker-id)
+[![Documentation](https://img.shields.io/badge/arXiv-preprint-blue.svg)](https://arxiv.org/abs/2401.03506)
+[![HuggingFace](https://img.shields.io/badge/Hugging-Face-blue.svg)](https://huggingface.co/google/DiarizationLM-13b-Fisher-v1)
+
+
+## Table of contents
+
+* [Overview](#Overview)
+* [Instructions](#Instructions)
+  * [Install the package](#Install-the-package)
+  * [Data format](#Data-format)
+  * [Conversion between representations](#Conversion-between-representations)
+  * [Transcript-preserving speaker transfer (TPST)](#Transcript-preserving-speaker-transfer-TPST)
+  * [Training data preparation](#Training-data-preparation)
+  * [LLM finetuning and inference (OpenAI)](#LLM-finetuning-and-inference-OpenAI)
+  * [LLM finetuning and inference (Llama 2)](#LLM-finetuning-and-inference-Llama-2)
+  * [Completion parser](#Completion-parser)
+  * [Metrics](#Metrics)
+* [Citation](#Citation)
 
 ## Overview
 
@@ -159,6 +177,33 @@ During inference, the prompts are send to the LLM, and the LLM will generate the
 1. Truncate the completion suffix, and any text generated after this suffix.
 2. Concatenate the completions of all segments from the same utterance.
 3. Transfer the speakers to the original hypothesis ASR transcript.
+
+### Metrics
+
+We report [Word Error Rate (WER)](https://en.wikipedia.org/wiki/Word_error_rate)
+and [Word Diarization Error Rate (WDER)](https://arxiv.org/pdf/1907.05337)
+in our paper.
+
+Also, we would like to highlight that both WER and WDER reported in our papers
+are **micro** metrics, i.e. both numerators and denominators are aggregated
+on the entire dataset.
+
+We provide an implementation of WER and WDER in `metrics.py`. If you use our
+json-based data format, you can call our script to produce metrics as below:
+
+```
+python3 compute_metrics_on_json.py \
+--input=testdata/example_data.json \
+--output=/tmp/example_metrics.json
+```
+
+If you use our `postprocess_completions.py` script to process the LLM results,
+you need to specify `--hyp_spk_field="hyp_spk_llm"` when running
+`compute_metrics_on_json.py`.
+
+Also please note that this implementation is different from Google's internal implementation that we used in the paper, but is a best-effort attempt to
+replicate the results. The biggest differences are from text normalization,
+such as de-punctuation.
 
 ## Citation
 
