@@ -6,9 +6,15 @@ We implement:
   https://en.wikipedia.org/wiki/Word_error_rate
 - Word Diarization Error Rate (WDER): This metric was proposed by Google. See
   Shafey, Laurent El, Hagen Soltau, and Izhak Shafran. "Joint speech
-  recognition and speaker diarization via sequence transduction." arXiv
-  preprint arXiv:1907.05337 (2019).
+  recognition and speaker diarization via sequence transduction."
+  arXiv preprint arXiv:1907.05337 (2019).
   https://arxiv.org/pdf/1907.05337
+- Concatenated minimum-permutation Word Error Rate (cpWER): This metric was
+  used in the CHiME-6 Challenge. See
+  Watanabe, Shinji, et al. "CHiME-6 challenge: Tackling multispeaker speech
+  recognition for unsegmented recordings."
+  arXiv preprint arXiv:2004.09249 (2020).
+  https://arxiv.org/pdf/2004.09249
 
 Note: This implementation is different from Google's internal implementation
 that we used in the paper, but is a best-effort attempt to replicate the
@@ -29,17 +35,33 @@ from diarizationlm import levenshtein
 class UtteranceMetrics:
   """Metrics for one utterance."""
 
-  # Word Error Rate (WER) metrics.
   wer_insert: int = 0
   wer_delete: int = 0
   wer_sub: int = 0
   wer_correct: int = 0
   wer_total: int = 0
 
-  # Word Diarization Error Rate (WDER) metrics.
   wder_sub: int = 0
   wder_correct: int = 0
   wder_total: int = 0
+
+  cpwer_insert: int = 0
+  cpwer_delete: int = 0
+  cpwer_sub: int = 0
+  cpwer_correct: int = 0
+  cpwer_total: int = 0
+
+
+def merge_cpwer(
+    wer_metrics: list[UtteranceMetrics], cpwer_metrics: UtteranceMetrics
+) -> None:
+  """Compute cpWER metrics by merging a list of WER metrics."""
+  for utt in wer_metrics:
+    cpwer_metrics.cpwer_insert += utt.wer_insert
+    cpwer_metrics.cpwer_delete += utt.wer_delete
+    cpwer_metrics.cpwer_sub += utt.wer_sub
+    cpwer_metrics.cpwer_correct += utt.wer_correct
+    cpwer_metrics.cpwer_total += utt.wer_total
 
 
 def compute_wer(
@@ -84,6 +106,9 @@ def compute_utterance_metrics(
   hyp_words = hyp_normalized.split()
   ref_words = ref_normalized.split()
 
+  ########################################
+  # Compute WER.
+  ########################################
   result, align = compute_wer(hyp_text, ref_text)
 
   compute_diarization_metrics = hyp_spk or ref_spk
@@ -93,6 +118,9 @@ def compute_utterance_metrics(
   if not (hyp_spk and ref_spk):
     raise ValueError("hyp_spk and ref_spk must be both unset or both set.")
 
+  ########################################
+  # Compute WDER.
+  ########################################
   hyp_spk_list = [int(x) for x in hyp_spk.split()]
   ref_spk_list = [int(x) for x in ref_spk.split()]
   if len(hyp_spk_list) != len(hyp_words):
@@ -121,6 +149,39 @@ def compute_utterance_metrics(
   result.wder_total = len(ref_spk_list_align)
   result.wder_sub = result.wder_total - result.wder_correct
 
+  ########################################
+  # Compute cpWER.
+  ########################################
+  spk_pair_metrics = {}
+  cost_matrix = np.zeros((max_spk, max_spk), dtype=int)
+  for i in range(1, max_spk + 1):
+    ref_words_for_spk = [
+        ref_words[k] for k in range(len(ref_words)) if ref_spk_list[k] == i
+    ]
+    if not ref_words_for_spk:
+      continue
+    for j in range(1, max_spk + 1):
+      hyp_words_for_spk = [
+          hyp_words[k] for k in range(len(hyp_words)) if hyp_spk_list[k] == j
+      ]
+      if not hyp_words_for_spk:
+        continue
+      spk_pair_metrics[(i, j)], _ = compute_wer(
+          hyp_text=" ".join(hyp_words_for_spk),
+          ref_text=" ".join(ref_words_for_spk),
+      )
+      cost_matrix[i - 1, j - 1] = spk_pair_metrics[(i, j)].wer_correct
+
+  # Solve alignment.
+  row_index, col_index = optimize.linear_sum_assignment(
+      cost_matrix, maximize=True
+  )
+  metrics_to_concat = []
+  for r, c in zip(row_index, col_index):
+    if (r + 1, c + 1) not in spk_pair_metrics:
+      continue
+    metrics_to_concat.append(spk_pair_metrics[(r + 1, c + 1)])
+  merge_cpwer(metrics_to_concat, result)
   return result
 
 
@@ -154,6 +215,11 @@ def compute_metrics_on_json_dict(
   final_wder_total = 0
   final_wder_correct = 0
   final_wder_sub = 0
+  final_cpwer_total = 0
+  final_cpwer_correct = 0
+  final_cpwer_sub = 0
+  final_cpwer_delete = 0
+  final_cpwer_insert = 0
   for utt in result_dict["utterances"]:
     final_wer_total += utt["wer_total"]
     final_wer_correct += utt["wer_correct"]
@@ -163,11 +229,20 @@ def compute_metrics_on_json_dict(
     final_wder_total += utt["wder_total"]
     final_wder_correct += utt["wder_correct"]
     final_wder_sub += utt["wder_sub"]
+    final_cpwer_total += utt["cpwer_total"]
+    final_cpwer_correct += utt["cpwer_correct"]
+    final_cpwer_sub += utt["cpwer_sub"]
+    final_cpwer_delete += utt["cpwer_delete"]
+    final_cpwer_insert += utt["cpwer_insert"]
 
   final_wer = (
       final_wer_sub + final_wer_delete + final_wer_insert
   ) / final_wer_total
   final_wder = final_wder_sub / final_wder_total
+  final_cpwer = (
+      final_cpwer_sub + final_cpwer_delete + final_cpwer_insert
+  ) / final_cpwer_total
   result_dict["WER"] = final_wer
   result_dict["WDER"] = final_wder
+  result_dict["cpWER"] = final_cpwer
   return result_dict
