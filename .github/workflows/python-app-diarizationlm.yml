@@ -34,8 +34,8 @@ jobs:
         pip install torch
         pip install trl
         pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
-        export PYTHONPATH=.
-        pytype .
+        export PYTHONPATH=DiarizationLM:$PYTHONPATH
+        pytype DiarizationLM
     - name: Run tests
       run: |
         pip install pytest codecov
