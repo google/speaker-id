@@ -180,16 +180,18 @@ During inference, the prompts are send to the LLM, and the LLM will generate the
 
 ### Metrics
 
-We report [Word Error Rate (WER)](https://en.wikipedia.org/wiki/Word_error_rate)
-and [Word Diarization Error Rate (WDER)](https://arxiv.org/pdf/1907.05337)
-in our paper.
+We report three metrics in our paper:
 
-Also, we would like to highlight that both WER and WDER reported in our papers
-are **micro** metrics, i.e. both numerators and denominators are aggregated
-on the entire dataset.
+* [Word Error Rate (WER)](https://en.wikipedia.org/wiki/Word_error_rate)
+* [Word Diarization Error Rate (WDER)](https://arxiv.org/pdf/1907.05337)
+* [Concatenated minimum-permutation Word Error Rate (cpWER)](https://arxiv.org/pdf/2004.09249)
 
-We provide an implementation of WER and WDER in `metrics.py`. If you use our
-json-based data format, you can call our script to produce metrics as below:
+Also, we would like to highlight that all these three metrics reported in our
+papers are **micro** metrics, i.e. both numerators and denominators are
+aggregated on the entire dataset.
+
+We provide an implementation of WER, WDER and cpWER in `metrics.py`. If you use
+our json-based data format, you can call our script to produce metrics as below:
 
 ```
 python3 compute_metrics_on_json.py \
