@@ -1,8 +1,18 @@
 """A Python implementation of the ASR and diarization metrics.
 
+We implement:
+- Word Error Rate (WER):  This is the most widely used metrics for
+  Automatic Speech Recognition (ASR). See
+  https://en.wikipedia.org/wiki/Word_error_rate
+- Word Diarization Error Rate (WDER): This metric was proposed by Google. See
+  Shafey, Laurent El, Hagen Soltau, and Izhak Shafran. "Joint speech
+  recognition and speaker diarization via sequence transduction." arXiv preprint arXiv:1907.05337 (2019).
+  https://arxiv.org/pdf/1907.05337
+
 Note: This implementation is different from Google's internal implementation
 that we used in the paper, but is a best-effort attempt to replicate the
-results.
+results. The biggest differences are from text normalization, such as
+de-punctuation.
 """
 
 import dataclasses
@@ -18,12 +28,14 @@ from diarizationlm import levenshtein
 class UtteranceMetrics:
   """Metrics for one utterance."""
 
+  # Word Error Rate (WER) metrics.
   wer_insert: int = 0
   wer_delete: int = 0
   wer_sub: int = 0
   wer_correct: int = 0
   wer_total: int = 0
 
+  # Word Diarization Error Rate (WDER) metrics.
   wder_sub: int = 0
   wder_correct: int = 0
   wder_total: int = 0
@@ -60,6 +72,7 @@ def compute_utterance_metrics(
   result.wer_total = result.wer_correct + result.wer_sub + result.wer_delete
   assert result.wer_total == len(ref_words)
 
+  # Compute WDER if needed.
   compute_wder = hyp_spk or ref_spk
   if not compute_wder:
     return result
