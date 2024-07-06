@@ -126,5 +126,6 @@ class MetricsTest(unittest.TestCase):
     self.assertAlmostEqual(result["WDER"], 0.0, delta=0.001)
     self.assertAlmostEqual(result["cpWER"], 0.2363, delta=0.001)
 
+
 if __name__ == "__main__":
   unittest.main()
