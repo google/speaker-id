@@ -22,7 +22,7 @@ def get_completion(prompt: str, model, tokenizer) -> str:
   return completion[0]
 
 
-def run_inference(input_file: str, output_dir: str):
+def run_inference(input_file: str, output_dir: str) -> None:
   print("Running inference on:", input_file)
 
   # Output dir.

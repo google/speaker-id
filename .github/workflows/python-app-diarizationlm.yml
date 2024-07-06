@@ -23,17 +23,20 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest pytype
         pip install -r DiarizationLM/requirements.txt
     - name: Lint with flake8
       run: |
+        pip install flake8
         flake8 --indent-size 2 --max-line-length 80 DiarizationLM
     - name: pytype
       run: |
-        pytype DiarizationLM/*.py
-        pytype DiarizationLM/diarizationlm
+        pip install pytype
+        pip install torch
+        pip install tri
+        pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+        pytype .
     - name: Run tests
       run: |
-        pip install codecov
+        pip install pytest codecov
         bash DiarizationLM/run_tests.sh
         bash DiarizationLM/run_tools.sh

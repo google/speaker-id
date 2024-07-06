@@ -3,11 +3,11 @@ from datasets import Dataset, disable_caching, concatenate_datasets
 from diarizationlm import utils
 
 
-def formatting_prompts_func(example):
+def formatting_prompts_func(example: dict[str, str]) -> dict[str, str]:
   return {"text": example["prompt"] + example["target"]}
 
 
-def build_dataset_single_source(input_file: str):
+def build_dataset_single_source(input_file: str) -> Dataset:
   disable_caching()
   po = utils.PromptOptions(
       emit_input_length=config.EMIT_INPUT_LENGTH,
@@ -36,7 +36,7 @@ def build_dataset_single_source(input_file: str):
   return concatenate_datasets([dataset1, dataset2])
 
 
-def build_dataset():
+def build_dataset() -> Dataset:
   disable_caching()
   all_datasets = []
   for data_name in config.TRAINING_INPUT:

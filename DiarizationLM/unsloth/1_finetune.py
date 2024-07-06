@@ -13,7 +13,7 @@ from unsloth import FastLanguageModel
 from unsloth import is_bfloat16_supported
 
 
-def run_training():
+def run_training() -> None:
   ############################################################################
   # Get dataset
   ############################################################################

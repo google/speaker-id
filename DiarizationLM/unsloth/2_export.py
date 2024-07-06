@@ -6,9 +6,9 @@ from unsloth import FastLanguageModel
 
 
 def export_models(
-    save_lora=True,
-    save_16bit=True,
-):
+    save_lora: bool=True,
+    save_16bit: bool=True,
+) -> None:
   ############################################################################
   # Get model
   ############################################################################
