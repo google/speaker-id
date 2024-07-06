@@ -50,7 +50,7 @@ def main(argv: Sequence[str]) -> None:
       prompt_suffix=FLAGS.prompt_suffix,
   )
 
-  for utt in tqdm.tqdm(ata_dict["utterances"]):
+  for utt in tqdm.tqdm(data_dict["utterances"]):
     prompts = utils.generate_prompts(utt, po=po)
 
     utt["completions"] = []
