@@ -32,7 +32,7 @@ jobs:
       run: |
         pip install pytype
         pip install torch
-        pip install tri
+        pip install trl
         pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
         export PYTHONPATH=.
         pytype .
