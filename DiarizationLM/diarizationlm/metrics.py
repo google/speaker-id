@@ -6,7 +6,8 @@ We implement:
   https://en.wikipedia.org/wiki/Word_error_rate
 - Word Diarization Error Rate (WDER): This metric was proposed by Google. See
   Shafey, Laurent El, Hagen Soltau, and Izhak Shafran. "Joint speech
-  recognition and speaker diarization via sequence transduction." arXiv preprint arXiv:1907.05337 (2019).
+  recognition and speaker diarization via sequence transduction." arXiv
+  preprint arXiv:1907.05337 (2019).
   https://arxiv.org/pdf/1907.05337
 
 Note: This implementation is different from Google's internal implementation
