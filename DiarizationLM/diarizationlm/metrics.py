@@ -42,12 +42,9 @@ class UtteranceMetrics:
   wder_total: int = 0
 
 
-def compute_utterance_metrics(
-    hyp_text: str,
-    ref_text: str,
-    hyp_spk: Optional[str] = None,
-    ref_spk: Optional[str] = None,
-) -> UtteranceMetrics:
+def compute_wer(
+    hyp_text: str, ref_text: str
+) -> tuple[UtteranceMetrics, list[tuple[int, int]]]:
   """Compute the word error rate of an utterance."""
   result = UtteranceMetrics()
   hyp_normalized = utils.normalize_text(hyp_text)
@@ -72,10 +69,25 @@ def compute_utterance_metrics(
 
   result.wer_total = result.wer_correct + result.wer_sub + result.wer_delete
   assert result.wer_total == len(ref_words)
+  return result, align
 
-  # Compute WDER if needed.
-  compute_wder = hyp_spk or ref_spk
-  if not compute_wder:
+
+def compute_utterance_metrics(
+    hyp_text: str,
+    ref_text: str,
+    hyp_spk: Optional[str] = None,
+    ref_spk: Optional[str] = None,
+) -> UtteranceMetrics:
+  """Compute all metrics of an utterance."""
+  hyp_normalized = utils.normalize_text(hyp_text)
+  ref_normalized = utils.normalize_text(ref_text)
+  hyp_words = hyp_normalized.split()
+  ref_words = ref_normalized.split()
+
+  result, align = compute_wer(hyp_text, ref_text)
+
+  compute_diarization_metrics = hyp_spk or ref_spk
+  if not compute_diarization_metrics:
     return result
 
   if not (hyp_spk and ref_spk):
