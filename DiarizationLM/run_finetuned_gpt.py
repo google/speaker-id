@@ -4,6 +4,7 @@ from collections.abc import Sequence
 import json
 from absl import app
 from absl import flags
+import tqdm
 import openai
 from diarizationlm import utils
 
@@ -49,7 +50,7 @@ def main(argv: Sequence[str]) -> None:
       prompt_suffix=FLAGS.prompt_suffix,
   )
 
-  for utt in data_dict["utterances"]:
+  for utt in tqdm.tqdm(ata_dict["utterances"]):
     prompts = utils.generate_prompts(utt, po=po)
 
     utt["completions"] = []

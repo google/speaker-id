@@ -9,6 +9,7 @@ import json
 
 from absl import app
 from absl import flags
+import tqdm
 
 from diarizationlm import utils
 
@@ -40,7 +41,7 @@ def main(argv: Sequence[str]) -> None:
   po = utils.PromptOptions(completion_suffix=FLAGS.completion_suffix)
 
   # Process utterances.
-  for utt in data_dict["utterances"]:
+  for utt in tqdm.tqdm(data_dict["utterances"]):
     utils.postprocess_completions_for_utt(
         utt,
         llm_text_field="llm_text",
