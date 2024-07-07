@@ -44,10 +44,7 @@ def normalize_text(text: str) -> str:
 
   # Remove punctuation.
   for punc in PUNCTUATIONS:
-    text_de_punt = text_lower.replace(punc, "")
-    # If ater removing punctuation, we dropped words, then we keep punctuation.
-    if len(text_lower.split()) == len(text_de_punt.split()):
-      text_lower = text_de_punt
+    text_lower = text_lower.replace(punc, "")
 
   return " ".join(text_lower.split())
 
