@@ -193,16 +193,28 @@ def compute_metrics_on_json_dict(
     hyp_spk_field: str = "hyp_spk",
 ) -> dict[str, Any]:
   """Compute metrics for all utterances in a json object."""
+  compute_diarization_metrics = ref_spk_field or hyp_spk_field
+  if compute_diarization_metrics:
+    if not (ref_spk_field and hyp_spk_field):
+      raise ValueError(
+          "hyp_spk_field and ref_spk_field must be both unset or both set."
+      )
   result_dict = {
       "utterances": [],
   }
   for utt in tqdm.tqdm(json_dict["utterances"]):
-    utt_metrics = compute_utterance_metrics(
-        hyp_text=utt[hyp_text_field],
-        ref_text=utt[ref_text_field],
-        hyp_spk=utt[hyp_spk_field],
-        ref_spk=utt[ref_spk_field],
-    )
+    if compute_diarization_metrics:
+      utt_metrics = compute_utterance_metrics(
+          hyp_text=utt[hyp_text_field],
+          ref_text=utt[ref_text_field],
+          hyp_spk=utt[hyp_spk_field],
+          ref_spk=utt[ref_spk_field],
+      )
+    else:
+      utt_metrics = compute_utterance_metrics(
+          hyp_text=utt[hyp_text_field],
+          ref_text=utt[ref_text_field],
+      )
     utt_result = dataclasses.asdict(utt_metrics)
     utt_result["utterance_id"] = utt["utterance_id"]
     result_dict["utterances"].append(utt_result)
@@ -226,23 +238,23 @@ def compute_metrics_on_json_dict(
     final_wer_sub += utt["wer_sub"]
     final_wer_delete += utt["wer_delete"]
     final_wer_insert += utt["wer_insert"]
-    final_wder_total += utt["wder_total"]
-    final_wder_correct += utt["wder_correct"]
-    final_wder_sub += utt["wder_sub"]
-    final_cpwer_total += utt["cpwer_total"]
-    final_cpwer_correct += utt["cpwer_correct"]
-    final_cpwer_sub += utt["cpwer_sub"]
-    final_cpwer_delete += utt["cpwer_delete"]
-    final_cpwer_insert += utt["cpwer_insert"]
+    if compute_diarization_metrics:
+      final_wder_total += utt["wder_total"]
+      final_wder_correct += utt["wder_correct"]
+      final_wder_sub += utt["wder_sub"]
+      final_cpwer_total += utt["cpwer_total"]
+      final_cpwer_correct += utt["cpwer_correct"]
+      final_cpwer_sub += utt["cpwer_sub"]
+      final_cpwer_delete += utt["cpwer_delete"]
+      final_cpwer_insert += utt["cpwer_insert"]
 
-  final_wer = (
+  result_dict["WER"] = (
       final_wer_sub + final_wer_delete + final_wer_insert
   ) / final_wer_total
-  final_wder = final_wder_sub / final_wder_total
-  final_cpwer = (
-      final_cpwer_sub + final_cpwer_delete + final_cpwer_insert
-  ) / final_cpwer_total
-  result_dict["WER"] = final_wer
-  result_dict["WDER"] = final_wder
-  result_dict["cpWER"] = final_cpwer
+
+  if compute_diarization_metrics:
+    result_dict["WDER"] = final_wder_sub / final_wder_total
+    result_dict["cpWER"] = (
+        final_cpwer_sub + final_cpwer_delete + final_cpwer_insert
+    ) / final_cpwer_total
   return result_dict

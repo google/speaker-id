@@ -28,6 +28,16 @@ class MetricsTest(unittest.TestCase):
     self.assertEqual(result.wer_correct, 4)
     self.assertEqual(result.wer_total, 6)
 
+  def test_wer_special(self):
+    ref = "a b c"
+    hyp = "x y a c"
+    result = metrics.compute_utterance_metrics(hyp, ref)
+    self.assertEqual(result.wer_insert, 1)
+    self.assertEqual(result.wer_delete, 0)
+    self.assertEqual(result.wer_sub, 2)
+    self.assertEqual(result.wer_correct, 1)
+    self.assertEqual(result.wer_total, 3)
+
   def test_wder_same_words(self):
     hyp = "hello good morning how are you"
     ref = "Hello. Good morning, how are you?"
@@ -85,6 +95,32 @@ class MetricsTest(unittest.TestCase):
     self.assertAlmostEqual(result["WER"], 0.2666, delta=0.001)
     self.assertAlmostEqual(result["WDER"], 0.1538, delta=0.001)
     self.assertAlmostEqual(result["cpWER"], 0.5333, delta=0.001)
+
+  def test_compute_metrics_on_json_dict_wer_only(self):
+    json_dict = {
+        "utterances": [
+            {
+                "utterance_id": "utt1",
+                "hyp_text": "hello good morning how are you",
+                "hyp_spk": "1 1 1 2 2 2",
+                "ref_text": "Hello. Good morning, how are you?",
+                "ref_spk": "2 2 2 2 1 1",
+            },
+            {
+                "utterance_id": "utt2",
+                "hyp_text": "a b c d e f g h",
+                "hyp_spk": "1 1 1 2 2 2 3 2",
+                "ref_text": "a bb c e f gg g h ii",
+                "ref_spk": "2 2 2 2 3 3 4 3 2",
+            },
+        ]
+    }
+    result = metrics.compute_metrics_on_json_dict(
+        json_dict, ref_spk_field="", hyp_spk_field=""
+    )
+    self.assertEqual(result["utterances"][0]["utterance_id"], "utt1")
+    self.assertEqual(result["utterances"][1]["utterance_id"], "utt2")
+    self.assertAlmostEqual(result["WER"], 0.2666, delta=0.001)
 
   def test_compute_metrics_on_json_file(self):
     json_file = os.path.join("testdata/example_data.json")
