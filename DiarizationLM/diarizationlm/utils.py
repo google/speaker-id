@@ -42,11 +42,18 @@ def normalize_text(text: str) -> str:
   # Convert to lower case.
   text_lower = text.lower().strip()
 
-  # Remove punctuation.
-  for punc in PUNCTUATIONS:
-    text_lower = text_lower.replace(punc, "")
-
-  return " ".join(text_lower.split())
+  # Remove punctuations.
+  words = text_lower.split()
+  new_words = []
+  for word in words:
+    new_word = word
+    for punc in PUNCTUATIONS:
+      replaced = new_word.replace(punc, "")
+      if len(replaced.split()) != 1:
+        continue
+      new_word = replaced
+    new_words.append(new_word)
+  return " ".join(new_words)
 
 
 def speakers_transform(speakers: Sequence[str]) -> list[str]:
