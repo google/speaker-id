@@ -191,7 +191,37 @@ papers are **micro** metrics, i.e. both numerators and denominators are
 aggregated on the entire dataset.
 
 We provide an implementation of WER, WDER and cpWER in `metrics.py`. If you use
-our json-based data format, you can call our script to produce metrics as below:
+our json-based data format, you can call the `compute_metrics_on_json_dict()` function
+as below:
+
+```python
+import diarizationlm
+
+json_dict = {
+  "utterances": [
+      {
+          "utterance_id": "utt1",
+          "hyp_text": "hello good morning how are you",
+          "hyp_spk": "1 1 1 2 2 2",
+          "ref_text": "Hello. Good morning, how are you?",
+          "ref_spk": "2 2 2 2 1 1",
+      },
+      {
+          "utterance_id": "utt2",
+          "hyp_text": "a b c d e f g h",
+          "hyp_spk": "1 1 1 2 2 2 3 2",
+          "ref_text": "a bb c e f gg g h ii",
+          "ref_spk": "2 2 2 2 3 3 4 3 2",
+      },
+  ]
+}
+result = diarizationlm.compute_metrics_on_json_dict(json_dict)
+print("WER =", result["WER"])
+print("WDER =", result["WDER"])
+print("cpWER =", result["cpWER"])
+```
+
+Or you can our script to produce metrics as below:
 
 ```
 python3 compute_metrics_on_json.py \
