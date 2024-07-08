@@ -21,11 +21,10 @@ class EditOp(Enum):
 def levenshtein_with_edits(
     ref: str,
     hyp: str,
-    delimiter: str = " ",
     print_debug_info: bool = False) -> tuple[int, list[tuple[int, int]]]:
   align = []
-  s1 = ref.split(delimiter)
-  s2 = hyp.split(delimiter)
+  s1 = ref.split()
+  s2 = hyp.split()
   n1 = len(s1)
   n2 = len(s2)
   costs = np.zeros((n1+1, n2+1), dtype=np.int32)
