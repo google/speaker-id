@@ -1,5 +1,5 @@
 from diarizationlm import utils
-from transformers import LlamaForCausalLM, LlamaTokenizer
+from transformers import LlamaForCausalLM, AutoTokenizer
 
 HYPOTHESIS = (
     "<speaker:1> Hello, how are you doing <speaker:2> today? I am doing well."
@@ -7,7 +7,7 @@ HYPOTHESIS = (
 )
 
 print("Loading model...")
-tokenizer = LlamaTokenizer.from_pretrained(
+tokenizer = AutoTokenizer.from_pretrained(
     "google/DiarizationLM-13b-Fisher-v1", device_map="cuda"
 )
 model = LlamaForCausalLM.from_pretrained(
