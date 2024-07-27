@@ -53,8 +53,13 @@ def run_training() -> None:
   ############################################################################
   # Train the model
   ############################################################################
+  if "llama-3" in config.MODEL_NAME:
+    response_template = config.PROMPT_SUFFIX.rstrip()
+  else:
+    response_template = config.PROMPT_SUFFIX.strip()
+
   collator = DataCollatorForCompletionOnlyLM(
-      config.PROMPT_SUFFIX.rstrip(),
+      response_template=response_template,
       tokenizer=tokenizer)
 
   trainer = SFTTrainer(
