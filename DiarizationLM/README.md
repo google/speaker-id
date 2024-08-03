@@ -28,7 +28,9 @@
 
 Here we open source some functions and tools used in the [DiarizationLM paper](https://arxiv.org/abs/2401.03506).
 
-We also have open source models on Hugging Face: https://huggingface.co/google/DiarizationLM-13b-Fisher-v1
+We also have open source models on Hugging Face: https://huggingface.co/google/DiarizationLM-8b-Fisher-v2
+
+Play with our demo: https://huggingface.co/spaces/diarizers-community/DiarizationLM-GGUF
 
 <img src="resources/DiarizationLM_Bard_demo.gif" alt="demo" width="512"/>
 
