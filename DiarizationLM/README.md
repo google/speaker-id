@@ -169,7 +169,7 @@ After you have finetuned a model, we provide a Python script `run_finetuned_gpt.
 We open sourced Llama 2 & 3 based models on Hugging Face:
 
 * Llama 2: https://huggingface.co/google/DiarizationLM-13b-Fisher-v1
-* Llama 3: https://huggingface.co/google/DiarizationLM-8b-Fisher-v1
+* Llama 3: https://huggingface.co/google/DiarizationLM-8b-Fisher-v2
 
 The scripts to finetune these models are available in the `unsloth` folder.
 
