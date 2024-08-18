@@ -6,7 +6,8 @@
 [![Downloads](https://static.pepy.tech/badge/diarizationlm)](https://www.pepy.tech/projects/diarizationlm)
 [![codecov](https://codecov.io/gh/google/speaker-id/branch/master/graph/badge.svg)](https://codecov.io/gh/google/speaker-id)
 [![Documentation](https://img.shields.io/badge/arXiv-preprint-blue.svg)](https://arxiv.org/abs/2401.03506)
-[![HuggingFace](https://img.shields.io/badge/Hugging-Face-blue.svg)](https://huggingface.co/google/DiarizationLM-13b-Fisher-v1)
+[![HuggingFace](https://img.shields.io/badge/Hugging-Face-blue.svg)](https://huggingface.co/google/DiarizationLM-8b-Fisher-v2)
+[![HuggingFace Space](https://img.shields.io/badge/Online-Demo-blue.svg)](https://huggingface.co/spaces/diarizers-community/DiarizationLM-GGUF)
 
 
 ## Table of contents
