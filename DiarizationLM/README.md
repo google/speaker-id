@@ -248,10 +248,12 @@ such as de-punctuation.
 Our paper is cited as:
 
 ```
-@article{wang2024diarizationlm,
-  title={{DiarizationLM: Speaker Diarization Post-Processing with Large Language Models}},
-  author={Quan Wang and Yiling Huang and Guanlong Zhao and Evan Clark and Wei Xia and Hank Liao},
-  journal={arXiv preprint arXiv:2401.03506},
-  year={2024}
+@inproceedings{wang24h_interspeech,
+  title     = {{DiarizationLM}: Speaker Diarization Post-Processing with Large Language Models},
+  author    = {Quan Wang and Yiling Huang and Guanlong Zhao and Evan Clark and Wei Xia and Hank Liao},
+  year      = {2024},
+  booktitle = {Interspeech 2024},
+  pages     = {3754--3758},
+  doi       = {10.21437/Interspeech.2024-209},
 }
 ```
