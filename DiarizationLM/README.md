@@ -249,7 +249,7 @@ Our paper is cited as:
 
 ```
 @inproceedings{wang24h_interspeech,
-  title     = {{DiarizationLM}: Speaker Diarization Post-Processing with Large Language Models},
+  title     = {{DiarizationLM: Speaker Diarization Post-Processing with Large Language Models}},
   author    = {Quan Wang and Yiling Huang and Guanlong Zhao and Evan Clark and Wei Xia and Hank Liao},
   year      = {2024},
   booktitle = {Interspeech 2024},
