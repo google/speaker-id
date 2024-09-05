@@ -168,7 +168,7 @@ def run_multi_input_model(
     )
   for t in range(int(features.shape[0] / batch_size)):
     start_index = t * batch_size
-    features_t = features[start_index : start_index + batch_size, :]
+    features_t = features[start_index: start_index + batch_size, :]
     output, states = run_multi_input_model_one_step(model, features_t, states)
     outputs.append(output)
   return np.concatenate(outputs, axis=0)
