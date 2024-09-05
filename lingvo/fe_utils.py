@@ -5,7 +5,7 @@ import librosa
 from lingvo.tasks.asr import frontend as lingvo_frontend
 import numpy as np
 from scipy.io import wavfile
-import tensorflow.google.compat.v2 as tf
+import tensorflow.compat.v2 as tf
 
 
 def read_mean_stddev_csv(csv_file: str) -> tuple[np.ndarray, np.ndarray]:
