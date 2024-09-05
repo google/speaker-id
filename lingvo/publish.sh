@@ -16,7 +16,7 @@ rm -rf dist
 rm -rf diarizationlm.egg-info
 
 # build and upload
-/opt/homebrew/bin/python3.11 setup.py sdist bdist_wheel
-/opt/homebrew/bin/python3.11 -m twine upload dist/* --verbose
+python3 setup.py sdist bdist_wheel
+python3 -m twine upload dist/* --verbose
 
 popd
