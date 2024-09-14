@@ -35,7 +35,7 @@ def get_frontend_layer() -> lingvo_frontend.MelAsrFrontend:
       "sample_rate": 16000.0,
       "lower_edge_hertz": 125,
       "upper_edge_hertz": 7500,
-      "preemph": 0.0,
+      "preemph": 0.97,
       "noise_scale": 8,
       "pad_end": False,
       "fft_overdrive": True,
