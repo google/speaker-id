@@ -70,6 +70,24 @@ class MetricsTest(unittest.TestCase):
     self.assertEqual(result.cpwer_correct, 4)
     self.assertEqual(result.cpwer_total, 9)
 
+  def test_cpwer_edge_word_permutation(self):
+    hyp = "y x"
+    ref = "x y"
+    hyp_spk = "2 1"
+    ref_spk = "1 2"
+    result = metrics.compute_utterance_metrics(hyp, ref, hyp_spk, ref_spk)
+    print("result:", result)
+    self.assertEqual(result.wer_insert, 1)
+    self.assertEqual(result.wer_delete, 1)
+    self.assertEqual(result.wer_sub, 0)
+    self.assertEqual(result.wer_correct, 1)
+    self.assertEqual(result.wer_total, 2)
+    self.assertEqual(result.cpwer_insert, 0)
+    self.assertEqual(result.cpwer_delete, 0)
+    self.assertEqual(result.cpwer_sub, 0)
+    self.assertEqual(result.cpwer_correct, 2)
+    self.assertEqual(result.cpwer_total, 2)
+
   def test_compute_metrics_on_json_dict(self):
     json_dict = {
         "utterances": [
@@ -122,10 +140,28 @@ class MetricsTest(unittest.TestCase):
     self.assertEqual(result["utterances"][1]["utterance_id"], "utt2")
     self.assertAlmostEqual(result["WER"], 0.2666, delta=0.001)
 
+  # This is an example where cpWER < WER.
+  def test_compute_metrics_on_json_dict_cpwer_word_permutation(self):
+    json_dict = {
+        "utterances": [
+            {
+                "utterance_id": "utt1",
+                "hyp_text": "y x",
+                "hyp_spk": "2 1",
+                "ref_text": "x y",
+                "ref_spk": "1 2",
+            },
+        ]
+    }
+    result = metrics.compute_metrics_on_json_dict(json_dict)
+    self.assertEqual(result["utterances"][0]["utterance_id"], "utt1")
+    self.assertAlmostEqual(result["WER"], 1.0, delta=0.001)
+    self.assertAlmostEqual(result["cpWER"], 0, delta=0.001)
+
   def test_compute_metrics_on_json_file(self):
-    json_file = os.path.join("testdata/example_data.json")
-    with open(json_file, "r") as f:
-        json_dict = json.load(f)
+    json_file = os.path.join("testdata", "example_data.json")
+    with open(json_file, "rt") as f:
+      json_dict = json.load(f)
     result = metrics.compute_metrics_on_json_dict(json_dict)
     self.assertEqual(len(result["utterances"]), 2)
     self.assertEqual(result["utterances"][0]["utterance_id"], "en_0638")
@@ -135,9 +171,9 @@ class MetricsTest(unittest.TestCase):
     self.assertAlmostEqual(result["cpWER"], 0.2793, delta=0.001)
 
   def test_compute_metrics_on_json_file_oracle(self):
-    json_file = os.path.join("testdata/example_data.json")
-    with open(json_file, "r") as f:
-        json_dict = json.load(f)
+    json_file = os.path.join("testdata", "example_data.json")
+    with open(json_file, "rt") as f:
+      json_dict = json.load(f)
     result = metrics.compute_metrics_on_json_dict(
         json_dict, hyp_spk_field="hyp_spk_oracle"
     )
@@ -149,9 +185,9 @@ class MetricsTest(unittest.TestCase):
     self.assertAlmostEqual(result["cpWER"], 0.2363, delta=0.001)
 
   def test_compute_metrics_on_json_file_degraded(self):
-    json_file = os.path.join("testdata/example_data.json")
-    with open(json_file, "r") as f:
-        json_dict = json.load(f)
+    json_file = os.path.join("testdata", "example_data.json")
+    with open(json_file, "rt") as f:
+      json_dict = json.load(f)
     result = metrics.compute_metrics_on_json_dict(
         json_dict, ref_spk_field="ref_spk_degraded"
     )
