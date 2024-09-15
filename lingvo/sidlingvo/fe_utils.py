@@ -74,7 +74,7 @@ def normalize_features(
 def load_tflite_model(model_path: str) -> tf.lite.Interpreter:
   """Reads a serialized TFLite model and returns the Interpreter object."""
   # Read model.
-  with open(model_path) as file_object:
+  with open(model_path, "rb") as file_object:
     model_content = file_object.read()
   tflite_model = tf.lite.Interpreter(model_content=model_content)
   tflite_model.allocate_tensors()
