@@ -6,6 +6,20 @@ import numpy as np
 import fe_utils
 
 
+def aggregate_dvectors(dvectors: list[np.ndarray]) -> np.ndarray:
+  """Aggregate dvectors from multiple utterances."""
+  normalized_dvectors = [
+      dvector / np.linalg.norm(dvector) for dvector in dvectors
+  ]
+  stacked_dvectors = np.stack(normalized_dvectors, axis=0)
+  return np.mean(stacked_dvectors, axis=0, keepdims=False)
+
+
+def compute_cosine(vec1: np.ndarray, vec2: np.ndarray) -> float:
+  """Compute cosine similarity between two vectors."""
+  return np.inner(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
+
+
 @dataclasses.dataclass
 class WavToDvectorRunner:
   """WavToDvectorRunner."""
@@ -56,3 +70,16 @@ class WavToDvectorRunner:
         self.tisid_model, features_after_vad
     )
     return dvectors
+
+  def compute_score(
+      self, enroll_audio_list: list[str], test_audio: str
+  ) -> float:
+    """Compute the cosine similarity score between enroll and test audio."""
+    enroll_dvectors = [
+        self.wav_to_dvector(enroll_audio)[-1, :]
+        for enroll_audio in enroll_audio_list
+    ]
+    aggregate_enroll_dvector = aggregate_dvectors(enroll_dvectors)
+    test_dvector = self.wav_to_dvector(test_audio)[-1, :]
+    score = compute_cosine(aggregate_enroll_dvector, test_dvector)
+    return score
