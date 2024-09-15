@@ -3,7 +3,7 @@
 import dataclasses
 from lingvo.core import py_utils
 import numpy as np
-import fe_utils
+from sidlingvo import fe_utils
 
 
 def aggregate_dvectors(dvectors: list[np.ndarray]) -> np.ndarray:
