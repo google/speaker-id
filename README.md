@@ -19,10 +19,10 @@ If you are interested in using our products:
 
 ## Code
 
-### Lingvo [![Python application](https://github.com/google/speaker-id/actions/workflows/python-app-lingvo.yml/badge.svg)](https://github.com/google/speaker-id/actions/workflows/python-app-lingvo.yml)
+### SidLingvo [![Python application](https://github.com/google/speaker-id/actions/workflows/python-app-lingvo.yml/badge.svg)](https://github.com/google/speaker-id/actions/workflows/python-app-lingvo.yml)
 
 We open source some of the [Lingvo](https://github.com/tensorflow/lingvo)-based
-modules used in our publications.
+libraries used in our publications.
 
 Please see [`lingvo/README.md`](https://github.com/google/speaker-id/blob/master/lingvo/README.md) for more details.
 
