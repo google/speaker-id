@@ -5,7 +5,7 @@ from lingvo.core import test_utils
 
 import numpy as np
 
-import utils
+from sidlingvo import utils
 
 _RANDOM_SEED = 1321
 

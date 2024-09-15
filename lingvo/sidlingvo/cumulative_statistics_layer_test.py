@@ -6,7 +6,7 @@ from lingvo.core import py_utils
 from lingvo.core import test_utils
 import numpy as np
 
-import cumulative_statistics_layer
+from sidlingvo import cumulative_statistics_layer
 
 _TF_RANDOM_SEED = 1314
 

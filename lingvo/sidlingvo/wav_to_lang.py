@@ -5,8 +5,8 @@ import dataclasses
 from lingvo.core import py_utils
 import numpy as np
 
-import fe_utils
-import language_map
+from sidlingvo import fe_utils
+from sidlingvo import language_map
 
 
 @dataclasses.dataclass

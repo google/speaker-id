@@ -1,6 +1,6 @@
 """Tests for attentive scoring."""
 
-import attentive_scoring_layer
+from sidlingvo import attentive_scoring_layer
 from lingvo import compat as tf
 from lingvo.core import test_utils
 import numpy as np

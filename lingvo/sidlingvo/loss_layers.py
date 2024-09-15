@@ -6,7 +6,7 @@ from lingvo.core import base_layer
 from lingvo.core import layers as lingvo_layers
 from lingvo.core import py_utils
 import attentive_scoring_layer
-import utils
+from sidlingvo import utils
 
 
 class EmbeddingComparisonType(enum.Enum):

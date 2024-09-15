@@ -5,7 +5,7 @@ from lingvo.core import py_utils
 from lingvo.core import test_utils
 
 import numpy as np
-import loss_layers
+from sidlingvo import loss_layers
 
 FLAGS = tf.flags.FLAGS
 _RANDOM_SEED = 1314

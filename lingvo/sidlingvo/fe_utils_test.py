@@ -2,7 +2,7 @@ from lingvo.core import py_utils
 from lingvo.core import test_utils
 import numpy as np
 
-import fe_utils
+from sidlingvo import fe_utils
 
 
 class FrontendTest(test_utils.TestCase):
