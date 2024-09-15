@@ -16,7 +16,7 @@ def read_mean_stddev_csv(csv_file: str) -> tuple[np.ndarray, np.ndarray]:
 
 
 def get_int_samples(file_name: str) -> np.ndarray:
-  with open(file_name) as f:
+  with open(file_name, "rb") as f:
     sample_rate, int_samples = wavfile.read(f)
 
   if sample_rate != 16000:
