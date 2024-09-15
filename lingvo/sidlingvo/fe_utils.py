@@ -21,7 +21,7 @@ def get_int_samples(file_name: str) -> np.ndarray:
 
   if sample_rate != 16000:
     samples = int_samples / 32768.0
-    samples = librosa.resample(samples, sample_rate, target_sr=16000)
+    samples = librosa.resample(samples, orig_sr=sample_rate, target_sr=16000)
     int_samples = (samples * 32768.0).astype(np.int16)
 
   return np.expand_dims(int_samples, axis=0)
