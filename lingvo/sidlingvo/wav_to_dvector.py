@@ -35,6 +35,10 @@ class WavToDvectorRunner:
   vad_cluster_id: int = 2
   vad_num_clusters: int = 16
 
+  enrolled_speakers: dict[str, np.ndarray] = dataclasses.field(
+      default_factory=dict,
+  )
+
   def __post_init__(self):
     self.vad_model = fe_utils.load_tflite_model(self.vad_model_file)
     self.tisid_model = fe_utils.load_tflite_model(self.tisid_model_file)
@@ -83,3 +87,35 @@ class WavToDvectorRunner:
     test_dvector = self.wav_to_dvector(test_audio)[-1, :]
     score = compute_cosine(aggregate_enroll_dvector, test_dvector)
     return score
+
+  def enroll_speaker(self, name: str, enroll_audio_list: list[str]) -> None:
+    """Enroll a speaker with a list of audio."""
+    if not name:
+      raise ValueError("Name cannot be empty.")
+    enroll_dvectors = [
+        self.wav_to_dvector(enroll_audio)[-1, :]
+        for enroll_audio in enroll_audio_list
+    ]
+    self.aggregate_enroll_dvector = aggregate_dvectors(enroll_dvectors)
+    self.enrolled_speakers[name] = self.aggregate_enroll_dvector
+
+  def clear_enrollment(self) -> None:
+    """Clear the enrollment."""
+    self.enrolled_speakers = {}
+
+  def identify_speaker(
+      self, test_audio: str, threshold: float
+  ) -> tuple[str, float]:
+    """Identify the speaker of the test audio from all enrolled speakers."""
+    test_dvector = self.wav_to_dvector(test_audio)[-1, :]
+    max_score = -1.0
+    max_name = ""
+    for name, enroll_dvector in self.enrolled_speakers.items():
+      score = compute_cosine(enroll_dvector, test_dvector)
+      if score > max_score:
+        max_score = score
+        max_name = name
+    if max_score < threshold:
+      return "", max_score
+    else:
+      return max_name, max_score
