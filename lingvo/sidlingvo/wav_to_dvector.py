@@ -4,6 +4,7 @@ import dataclasses
 from lingvo.core import py_utils
 import numpy as np
 from sidlingvo import fe_utils
+import colortimelog
 
 
 def aggregate_dvectors(dvectors: list[np.ndarray]) -> np.ndarray:
@@ -51,6 +52,7 @@ class WavToDvectorRunner:
     input_signal = fe_utils.get_int_samples(audio_file)
     return self.samples_to_dvector(input_signal)
 
+  @colortimelog.timefunc
   def samples_to_dvector(self, input_signal: np.ndarray) -> np.ndarray:
     """Run speaker-id model on int16 samples."""
     input_paddings = fe_utils.np.zeros(input_signal.shape[:2])

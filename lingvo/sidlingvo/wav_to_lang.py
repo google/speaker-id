@@ -4,6 +4,7 @@ import dataclasses
 
 from lingvo.core import py_utils
 import numpy as np
+import colortimelog
 
 from sidlingvo import fe_utils
 from sidlingvo import language_map
@@ -36,6 +37,7 @@ class WavToLangRunner:
     input_signal = fe_utils.get_int_samples(audio_file)
     return self.samples_to_lang(input_signal)
 
+  @colortimelog.timefunc
   def samples_to_lang(self, input_signal: np.ndarray) -> tuple[str, np.ndarray]:
     """Run lang-id model on int16 samples."""
     input_paddings = fe_utils.np.zeros(input_signal.shape[:2])

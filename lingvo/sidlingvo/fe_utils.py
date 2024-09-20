@@ -6,6 +6,7 @@ from lingvo.tasks.asr import frontend as lingvo_frontend
 import numpy as np
 from scipy.io import wavfile
 import tensorflow.compat.v2 as tf
+import colortimelog
 
 
 def read_mean_stddev_csv(csv_file: str) -> tuple[np.ndarray, np.ndarray]:
@@ -15,6 +16,7 @@ def read_mean_stddev_csv(csv_file: str) -> tuple[np.ndarray, np.ndarray]:
   return csv_data[0, :], csv_data[1, :]
 
 
+@colortimelog.timefunc
 def get_int_samples(file_name: str) -> np.ndarray:
   with open(file_name, "rb") as f:
     sample_rate, int_samples = wavfile.read(f)
@@ -71,6 +73,7 @@ def normalize_features(
   return features.astype(np.float32)
 
 
+@colortimelog.timefunc
 def load_tflite_model(model_path: str) -> tf.lite.Interpreter:
   """Reads a serialized TFLite model and returns the Interpreter object."""
   # Read model.

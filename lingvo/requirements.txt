@@ -3,3 +3,4 @@ scipy
 lingvo
 tensorflow-text
 librosa
+colortimelog
