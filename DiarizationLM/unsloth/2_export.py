@@ -32,7 +32,7 @@ def export_models(
       tokenizer.save_pretrained(os.path.join(config.MODEL_ID, "lora_model"))
 
   if save_16bit:
-    with colortimelog.timeblock("Saving 16bit model...")
+    with colortimelog.timeblock("Saving 16bit model..."):
       model.save_pretrained_merged(
           os.path.join(config.MODEL_ID, "model"),
           tokenizer,
