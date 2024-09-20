@@ -5,6 +5,7 @@ import tqdm
 
 import config
 
+import colortimelog
 from diarizationlm import utils
 from diarizationlm import metrics
 
@@ -51,14 +52,14 @@ def evaluate(input_file: str, output_file: str) -> None:
 
 if __name__ == "__main__":
   for eval_dataset in config.EVAL_INPUTS:
-    print("Evaluating:", eval_dataset)
-    output_dir = os.path.join(config.MODEL_ID,
-                              "decoded",
-                              f"checkpoint-{config.CHECKPOINT}",
-                              eval_dataset)
-    postprocess(
-      input_file=os.path.join(output_dir, "final.json"),
-      output_file=os.path.join(output_dir, "postprocessed.json"))
-    evaluate(
-      input_file=os.path.join(output_dir, "postprocessed.json"),
-      output_file=os.path.join(output_dir, "metrics.json"))
+    with colortimelog.timeblock("Evaluating: " + eval_dataset):
+      output_dir = os.path.join(config.MODEL_ID,
+                                "decoded",
+                                f"checkpoint-{config.CHECKPOINT}",
+                                eval_dataset)
+      postprocess(
+        input_file=os.path.join(output_dir, "final.json"),
+        output_file=os.path.join(output_dir, "postprocessed.json"))
+      evaluate(
+        input_file=os.path.join(output_dir, "postprocessed.json"),
+        output_file=os.path.join(output_dir, "metrics.json"))

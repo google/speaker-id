@@ -4,6 +4,7 @@ import json
 import os
 
 import config
+import colortimelog
 import tqdm
 from diarizationlm import utils
 from unsloth import FastLanguageModel
@@ -61,12 +62,12 @@ def run_inference(input_file: str, output_dir: str) -> None:
 
 if __name__ == "__main__":
   for eval_dataset in config.EVAL_INPUTS:
-    print("Running inference on:", eval_dataset)
-    eval_input = config.EVAL_INPUTS[eval_dataset]
-    output_dir = os.path.join(
-        config.MODEL_ID,
-        "decoded",
-        f"checkpoint-{config.CHECKPOINT}",
-        eval_dataset,
-    )
-    run_inference(input_file=eval_input, output_dir=output_dir)
+    with colortimelog.timeblock("Running inference on: " + eval_dataset):
+      eval_input = config.EVAL_INPUTS[eval_dataset]
+      output_dir = os.path.join(
+          config.MODEL_ID,
+          "decoded",
+          f"checkpoint-{config.CHECKPOINT}",
+          eval_dataset,
+      )
+      run_inference(input_file=eval_input, output_dir=output_dir)

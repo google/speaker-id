@@ -5,3 +5,4 @@ absl-py
 openai
 datasets
 tqdm
+colortimelog
