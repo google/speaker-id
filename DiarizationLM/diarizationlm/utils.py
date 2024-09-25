@@ -9,7 +9,7 @@ from typing import Any, List, Optional
 import numpy as np
 from scipy import optimize
 
-from diarizationlm import levenshtein
+import word_levenshtein as levenshtein
 
 PUNCTUATIONS = [",", ".", "_", "?", "!", "-", '"', "'"]
 

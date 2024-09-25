@@ -28,7 +28,7 @@ import numpy as np
 from scipy import optimize
 import tqdm
 from diarizationlm import utils
-from diarizationlm import levenshtein
+import word_levenshtein as levenshtein
 
 
 @dataclasses.dataclass

@@ -1,4 +1,8 @@
-"""Function for the Levenshtein algorithm."""
+"""Function for the Levenshtein algorithm.
+
+Note: This Python implementation is very inefficient. Please use this C++
+implementation instead: https://github.com/wq2012/word_levenshtein
+"""
 import numpy as np
 from enum import Enum
 
