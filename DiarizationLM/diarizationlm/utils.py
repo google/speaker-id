@@ -12,7 +12,7 @@ from scipy import optimize
 try:
   import word_levenshtein as levenshtein
 except ModuleNotFoundError:
-  import levenshtein
+  from diarizationlm import levenshtein
 
 PUNCTUATIONS = [",", ".", "_", "?", "!", "-", '"', "'"]
 

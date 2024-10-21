@@ -1,8 +1,10 @@
 """__init__ file."""
 
+from . import levenshtein
 from . import utils
 from . import metrics
 
+levenshtein_with_edits = levenshtein.levenshtein_with_edits
 PromptOptions = utils.PromptOptions
 transcript_preserving_speaker_transfer = (
     utils.transcript_preserving_speaker_transfer)
