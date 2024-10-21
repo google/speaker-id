@@ -28,7 +28,10 @@ import numpy as np
 from scipy import optimize
 import tqdm
 from diarizationlm import utils
-import word_levenshtein as levenshtein
+try:
+  import word_levenshtein as levenshtein
+except ModuleNotFoundError:
+  import levenshtein
 
 
 @dataclasses.dataclass

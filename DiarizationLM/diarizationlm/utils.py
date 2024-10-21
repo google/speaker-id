@@ -9,7 +9,10 @@ from typing import Any, List, Optional
 import numpy as np
 from scipy import optimize
 
-import word_levenshtein as levenshtein
+try:
+  import word_levenshtein as levenshtein
+except ModuleNotFoundError:
+  import levenshtein
 
 PUNCTUATIONS = [",", ".", "_", "?", "!", "-", '"', "'"]
 
