@@ -6,4 +6,4 @@ openai
 datasets
 tqdm
 colortimelog
-word_levenshtein
+word-levenshtein
