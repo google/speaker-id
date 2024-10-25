@@ -53,6 +53,7 @@ class MetricsTest(unittest.TestCase):
     self.assertEqual(result.cpwer_sub, 0)
     self.assertEqual(result.cpwer_correct, 5)
     self.assertEqual(result.cpwer_total, 6)
+    self.assertEqual(result.speaker_count_error, 0)
 
   def test_wder_diff_words(self):
     hyp = "a b c d e f g h"
@@ -69,6 +70,7 @@ class MetricsTest(unittest.TestCase):
     self.assertEqual(result.cpwer_sub, 3)
     self.assertEqual(result.cpwer_correct, 4)
     self.assertEqual(result.cpwer_total, 9)
+    self.assertEqual(result.speaker_count_error, 0)
 
   def test_cpwer_edge_word_permutation(self):
     hyp = "y x"
@@ -76,7 +78,6 @@ class MetricsTest(unittest.TestCase):
     hyp_spk = "2 1"
     ref_spk = "1 2"
     result = metrics.compute_utterance_metrics(hyp, ref, hyp_spk, ref_spk)
-    print("result:", result)
     self.assertEqual(result.wer_insert, 1)
     self.assertEqual(result.wer_delete, 1)
     self.assertEqual(result.wer_sub, 0)
@@ -87,6 +88,14 @@ class MetricsTest(unittest.TestCase):
     self.assertEqual(result.cpwer_sub, 0)
     self.assertEqual(result.cpwer_correct, 2)
     self.assertEqual(result.cpwer_total, 2)
+
+  def test_speaker_count_error(self):
+    hyp = "a b c d"
+    ref = "a b c d"
+    hyp_spk = "1 2 2 2"
+    ref_spk = "1 2 2 3"
+    result = metrics.compute_utterance_metrics(hyp, ref, hyp_spk, ref_spk)
+    self.assertEqual(result.speaker_count_error, -1)
 
   def test_compute_metrics_on_json_dict(self):
     json_dict = {
@@ -183,6 +192,7 @@ class MetricsTest(unittest.TestCase):
     self.assertAlmostEqual(result["WER"], 0.2363, delta=0.001)
     self.assertAlmostEqual(result["WDER"], 0.0, delta=0.001)
     self.assertAlmostEqual(result["cpWER"], 0.2363, delta=0.001)
+    self.assertAlmostEqual(result["SpkCntMAE"], 0.0, delta=0.001)
 
   def test_compute_metrics_on_json_file_degraded(self):
     json_file = os.path.join("testdata", "example_data.json")
@@ -197,6 +207,7 @@ class MetricsTest(unittest.TestCase):
     self.assertAlmostEqual(result["WER"], 0.2363, delta=0.001)
     self.assertAlmostEqual(result["WDER"], 0.0, delta=0.001)
     self.assertAlmostEqual(result["cpWER"], 0.2363, delta=0.001)
+    self.assertAlmostEqual(result["SpkCntMAE"], 0.0, delta=0.001)
 
 
 if __name__ == "__main__":

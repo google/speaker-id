@@ -15,6 +15,13 @@ We implement:
   recognition for unsegmented recordings."
   arXiv preprint arXiv:2004.09249 (2020).
   https://arxiv.org/pdf/2004.09249
+- Speaker Count Mean Absolute Error (SpkCntMAE): This metric is used to evaluate
+  the accuracy of the predicted number of speakers. See
+  Quan Wang, Yiling Huang, Han Lu, Guanlong Zhao, Ignacio Lopez Moreno. "Highly
+  Efficient Real-Time Streaming and Fully On-Device Speaker Diarization with
+  Multi-Stage Clustering."
+  arXiv preprint arXiv:2210.13690 (2022).
+  https://arxiv.org/abs/2210.13690
 
 Note: This implementation is different from Google's internal implementation
 that we used in the paper, but is a best-effort attempt to replicate the
@@ -53,6 +60,8 @@ class UtteranceMetrics:
   cpwer_sub: int = 0
   cpwer_correct: int = 0
   cpwer_total: int = 0
+
+  speaker_count_error: int = 0
 
 
 def merge_cpwer(
@@ -185,6 +194,14 @@ def compute_utterance_metrics(
       continue
     metrics_to_concat.append(spk_pair_metrics[(r + 1, c + 1)])
   merge_cpwer(metrics_to_concat, result)
+
+  ########################################
+  # Compute speaker count error.
+  ########################################
+  hyp_spk_count = len(set(hyp_spk_list))
+  ref_spk_count = len(set(ref_spk_list))
+  result.speaker_count_error = hyp_spk_count - ref_spk_count
+
   return result
 
 
@@ -235,6 +252,7 @@ def compute_metrics_on_json_dict(
   final_cpwer_sub = 0
   final_cpwer_delete = 0
   final_cpwer_insert = 0
+  final_speaker_count_absolute_error_total = 0
   for utt in result_dict["utterances"]:
     final_wer_total += utt["wer_total"]
     final_wer_correct += utt["wer_correct"]
@@ -250,6 +268,9 @@ def compute_metrics_on_json_dict(
       final_cpwer_sub += utt["cpwer_sub"]
       final_cpwer_delete += utt["cpwer_delete"]
       final_cpwer_insert += utt["cpwer_insert"]
+      final_speaker_count_absolute_error_total += abs(
+          utt["speaker_count_error"]
+      )
 
   result_dict["WER"] = (
       final_wer_sub + final_wer_delete + final_wer_insert
@@ -260,4 +281,7 @@ def compute_metrics_on_json_dict(
     result_dict["cpWER"] = (
         final_cpwer_sub + final_cpwer_delete + final_cpwer_insert
     ) / final_cpwer_total
+    result_dict["SpkCntMAE"] = final_speaker_count_absolute_error_total / len(
+        result_dict["utterances"]
+    )
   return result_dict
