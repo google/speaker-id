@@ -186,19 +186,19 @@ During inference, the prompts are send to the LLM, and the LLM will generate the
 
 ### Metrics
 
-We report three metrics in our paper:
+We provide an implementation of these metrics in `metrics.py`:
 
 * [Word Error Rate (WER)](https://en.wikipedia.org/wiki/Word_error_rate)
 * [Word Diarization Error Rate (WDER)](https://arxiv.org/pdf/1907.05337)
 * [Concatenated minimum-permutation Word Error Rate (cpWER)](https://arxiv.org/pdf/2004.09249)
+* [Speaker Count Mean Absolute Error (SpkCntMAE)](https://arxiv.org/abs/2210.13690)
 
-Also, we would like to highlight that all these three metrics reported in our
-papers are **micro** metrics, i.e. both numerators and denominators are
+Also, we would like to highlight that the WER, WDER, and cpWER metrics reported
+in our papers are all **micro** metrics, i.e. both numerators and denominators are
 aggregated on the entire dataset.
 
-We provide an implementation of WER, WDER and cpWER in `metrics.py`. If you use
-our json-based data format, you can call the `compute_metrics_on_json_dict()` function
-as below:
+If you use our json-based data format, you can call the
+`compute_metrics_on_json_dict()` function as below:
 
 ```python
 import diarizationlm
@@ -225,6 +225,7 @@ result = diarizationlm.compute_metrics_on_json_dict(json_dict)
 print("WER =", result["WER"])
 print("WDER =", result["WDER"])
 print("cpWER =", result["cpWER"])
+print("SpkCntMAE =", result["SpkCntMAE"])
 ```
 
 Or you can our script to produce metrics as below:
