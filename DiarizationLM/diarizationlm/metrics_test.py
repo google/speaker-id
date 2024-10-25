@@ -97,6 +97,30 @@ class MetricsTest(unittest.TestCase):
     result = metrics.compute_utterance_metrics(hyp, ref, hyp_spk, ref_spk)
     self.assertEqual(result.speaker_count_error, -1)
 
+  def test_speaker_count_mae(self):
+    json_dict = {
+        "utterances": [
+            {
+                # speaker count error = -3
+                "utterance_id": "utt1",
+                "hyp_text": "a a a a a a a",
+                "hyp_spk": "1 1 1 1 1 1 1",
+                "ref_text": "a a a a a a a",
+                "ref_spk": "1 2 3 4 4 4 4",
+            },
+            {
+                # speaker count error = 5
+                "utterance_id": "utt2",
+                "hyp_text": "a a a a a a a",
+                "hyp_spk": "1 2 3 4 5 6 7",
+                "ref_text": "a a a a a a a",
+                "ref_spk": "1 1 1 1 2 2 2",
+            },
+        ]
+    }
+    result = metrics.compute_metrics_on_json_dict(json_dict)
+    self.assertAlmostEqual(result["SpkCntMAE"], 4, delta=0.001)
+
   def test_compute_metrics_on_json_dict(self):
     json_dict = {
         "utterances": [
