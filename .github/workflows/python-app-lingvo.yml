@@ -26,7 +26,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get install libsndfile-dev
+        sudo apt-get update
+        sudo apt-get install -y libsndfile-dev liblzma-dev
         python -m pip install --upgrade pip
         pip install flake8 pytest pytype
         pip install -r lingvo/requirements.txt
