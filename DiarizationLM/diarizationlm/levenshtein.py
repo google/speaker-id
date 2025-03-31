@@ -3,15 +3,15 @@
 Note: This Python implementation is very inefficient. Please use this C++
 implementation instead: https://github.com/wq2012/word_levenshtein
 """
+import numba
 import numpy as np
-from enum import Enum
 
 
-class EditOp(Enum):
-  Correct = 0
-  Substitution = 1
-  Insertion = 2
-  Deletion = 3
+# Edit operations.
+_CORRECT = 0
+_SUBSTITUTION = 1
+_INSERTION = 2
+_DELETION = 3
 
 
 # Computes the Levenshtein alignment between strings ref and hyp, where the
@@ -22,6 +22,7 @@ class EditOp(Enum):
 # As an example, for strings 'a b' and 'a c', the output would look like:
 # (1, [(0,0), (1,1)]
 # Note that insertions are represented as (-1, j) and deletions as (i, -1).
+@numba.njit
 def levenshtein_with_edits(
     ref: str,
     hyp: str,
@@ -32,7 +33,7 @@ def levenshtein_with_edits(
   n1 = len(s1)
   n2 = len(s2)
   costs = np.zeros((n1+1, n2+1), dtype=np.int32)
-  backptr = np.zeros((n1+1, n2+1), dtype=EditOp)
+  backptr = np.zeros((n1+1, n2+1), dtype=np.int32)
 
   for i in range(n1+1):  # ref
     costs[i][0] = i  # deletions
@@ -48,13 +49,13 @@ def levenshtein_with_edits(
       sub = costs[i][j] + (s1[i] != s2[j])
       costs[i + 1][j + 1] = min(ins, del_, sub)
       if (costs[i+1][j+1] == ins):
-        backptr[i+1][j+1] = EditOp.Insertion
+        backptr[i+1][j+1] = _INSERTION
       elif (costs[i+1][j+1] == del_):
-        backptr[i+1][j+1] = EditOp.Deletion
+        backptr[i+1][j+1] = _DELETION
       elif (s1[i] == s2[j]):
-        backptr[i+1][j+1] = EditOp.Correct
+        backptr[i+1][j+1] = _CORRECT
       else:
-        backptr[i+1][j+1] = EditOp.Substitution
+        backptr[i+1][j+1] = _SUBSTITUTION
 
   if print_debug_info:
     print("Mincost: ", costs[n1][n2])
@@ -65,19 +66,19 @@ def levenshtein_with_edits(
   while (i > 0 or j > 0):
     if print_debug_info:
       print("i: ", i, " j: ", j)
-    ed_op = EditOp.Correct
+    ed_op = _CORRECT
     if (i >= 0 and j >= 0):
       ed_op = backptr[i][j]
     if (i >= 0 and j < 0):
-      ed_op = EditOp.Deletion
+      ed_op = _DELETION
     if (i < 0 and j >= 0):
-      ed_op = EditOp.Insertion
+      ed_op = _INSERTION
     if (i < 0 and j < 0):
       raise RuntimeError("Invalid alignment")
-    if (ed_op == EditOp.Insertion):
+    if (ed_op == _INSERTION):
       align.append((-1, j-1))
       j -= 1
-    elif (ed_op == EditOp.Deletion):
+    elif (ed_op == _DELETION):
       align.append((i-1, -1))
       i -= 1
     else:
