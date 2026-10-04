@@ -456,6 +456,155 @@ def truncate_suffix_and_tailing_text(text: str, suffix: str) -> str:
   return text
 
 
+def apply_locality_gated_speaker_transfer(
+    hyp_spk: Sequence[str],
+    llm_spk: Sequence[str],
+    max_local_span_words: int = 5,
+    absorb_ghost_speakers: bool = True,
+) -> list[str]:
+  """Apply Locality-Gated speaker transfer on top of raw TPST speaker labels.
+
+  Accepts LLM speaker modifications on short lexical boundary/backchannel spans
+  (1 <= L <= max_local_span_words) while preserving the acoustic speaker anchor
+  on long monologue spans (L > max_local_span_words).
+
+  Args:
+    hyp_spk: Original hypothesis speaker labels (length N).
+    llm_spk: Raw TPST-transferred LLM speaker labels (length N).
+    max_local_span_words: Maximum contiguous span length L_max for accepting
+      LLM speaker modifications.
+    absorb_ghost_speakers: Whether to absorb tiny ghost speaker clusters into
+      temporally adjacent speakers.
+
+  Returns:
+    List of locality-gated speaker labels (length N).
+  """
+  if len(hyp_spk) != len(llm_spk):
+    raise ValueError("hyp_spk and llm_spk must have the same length")
+  n = len(hyp_spk)
+  if n == 0:
+    return []
+
+  raw_spk = list(llm_spk)
+  if absorb_ghost_speakers:
+    counts: dict[str, int] = {}
+    for s in raw_spk:
+      counts[s] = counts.get(s, 0) + 1
+    ghost_thresh = min(12, max(2, int(0.01 * n)))
+    if len(counts) > 2:
+      valid_spks = {s for s, c in counts.items() if c > ghost_thresh}
+      if len(valid_spks) >= 2:
+        for idx in range(n):
+          if raw_spk[idx] not in valid_spks:
+            prev_s = raw_spk[idx - 1] if idx > 0 else None
+            next_s = None
+            for j in range(idx + 1, n):
+              if raw_spk[j] in valid_spks:
+                next_s = raw_spk[j]
+                break
+            if prev_s in valid_spks:
+              raw_spk[idx] = prev_s
+            elif next_s in valid_spks:
+              raw_spk[idx] = next_s
+
+  gated_spk = list(hyp_spk)
+  i = 0
+  while i < n:
+    if raw_spk[i] != hyp_spk[i]:
+      j = i
+      while j < n and raw_spk[j] != hyp_spk[j]:
+        j += 1
+      span_len = j - i
+      if span_len <= max_local_span_words:
+        for k in range(i, j):
+          gated_spk[k] = raw_spk[k]
+      i = j
+    else:
+      i += 1
+  return gated_spk
+
+
+def locality_preserving_speaker_transfer(
+    src_text: str,
+    src_spk: str,
+    tgt_text: str,
+    tgt_spk: str,
+    max_local_span_words: int = 5,
+    absorb_ghost_speakers: bool = True,
+) -> str:
+  """Locality-Gated Transcript-Preserving Speaker Transfer (LG-TPST)."""
+  raw_transferred = transcript_preserving_speaker_transfer(
+      src_text=src_text,
+      src_spk=src_spk,
+      tgt_text=tgt_text,
+      tgt_spk=tgt_spk,
+  )
+  gated = apply_locality_gated_speaker_transfer(
+      hyp_spk=tgt_spk.split(),
+      llm_spk=raw_transferred.split(),
+      max_local_span_words=max_local_span_words,
+      absorb_ghost_speakers=absorb_ghost_speakers,
+  )
+  return " ".join(gated)
+
+
+def get_locality_preserving_oracle_speakers(
+    hyp_spk: str,
+    hyp_spk_oracle: str,
+    max_local_span_words: int = 5,
+) -> str:
+  """Construct Locality-Preserving Oracle target speakers for multi-speaker SFT.
+
+  Retains oracle speaker corrections on short lexical spans (1 <= L <=
+  max_local_span_words) and merges tiny ghost speakers while preserving
+  acoustic speaker anchors on long monologues (L > max_local_span_words).
+
+  Args:
+    hyp_spk: Space-separated input acoustic speaker sequence.
+    hyp_spk_oracle: Space-separated Hungarian-aligned oracle speaker sequence.
+    max_local_span_words: Maximum contiguous span length for local corrections.
+
+  Returns:
+    Space-separated locality-preserving oracle speaker sequence.
+  """
+  hyp_list = hyp_spk.split()
+  ora_list = hyp_spk_oracle.split()
+  if len(hyp_list) != len(ora_list):
+    raise ValueError("hyp_spk and hyp_spk_oracle must have the same length")
+  n = len(hyp_list)
+  if n == 0:
+    return ""
+
+  # For 2-speaker conversations, full oracle supervision is preserved.
+  if len(set(hyp_list) | set(ora_list)) <= 2:
+    return hyp_spk_oracle
+
+  counts: dict[str, int] = {}
+  for s in hyp_list:
+    counts[s] = counts.get(s, 0) + 1
+  ghost_thresh = min(12, max(2, int(0.01 * n)))
+
+  loc_list = list(hyp_list)
+  i = 0
+  while i < n:
+    if ora_list[i] != hyp_list[i]:
+      j = i
+      while j < n and ora_list[j] != hyp_list[j]:
+        j += 1
+      span_len = j - i
+      if span_len <= max_local_span_words:
+        for k in range(i, j):
+          loc_list[k] = ora_list[k]
+      else:
+        for k in range(i, j):
+          if counts.get(hyp_list[k], 0) <= ghost_thresh:
+            loc_list[k] = ora_list[k]
+      i = j
+    else:
+      i += 1
+  return " ".join(loc_list)
+
+
 def postprocess_completions_for_utt(
     utt: dict[str, Any],
     llm_text_field: str = "llm_text",
@@ -464,6 +613,7 @@ def postprocess_completions_for_utt(
     hyp_text_field: str = "hyp_text",
     hyp_spk_field: str = "hyp_spk",
     po: PromptOptions = PromptOptions(),
+    max_local_span_words: Optional[int] = None,
 ) -> None:
   """Postprocess the LLM completions of an utterance json dict."""
   # Remove completion suffix if it exists.
@@ -486,18 +636,28 @@ def postprocess_completions_for_utt(
   # Note: this step can arguably be skipped and we directly use LLM output
   # for evaluation. The assumption is LLM does not change original text too
   # much. `update_sstable_with_speakers` should be updated accordingly if so.
-  utt[transfered_llm_speaker_field] = transcript_preserving_speaker_transfer(
-      src_text=utt[llm_text_field],
-      src_spk=utt[llm_speaker_field],
-      tgt_text=utt[hyp_text_field],
-      tgt_spk=utt[hyp_spk_field],
-  )
+  if max_local_span_words is not None:
+    utt[transfered_llm_speaker_field] = locality_preserving_speaker_transfer(
+        src_text=utt[llm_text_field],
+        src_spk=utt[llm_speaker_field],
+        tgt_text=utt[hyp_text_field],
+        tgt_spk=utt[hyp_spk_field],
+        max_local_span_words=max_local_span_words,
+    )
+  else:
+    utt[transfered_llm_speaker_field] = transcript_preserving_speaker_transfer(
+        src_text=utt[llm_text_field],
+        src_spk=utt[llm_speaker_field],
+        tgt_text=utt[hyp_text_field],
+        tgt_spk=utt[hyp_spk_field],
+    )
 
 
 def transfer_llm_completion(
     llm_completion: str,
     hyp: str,
     po: PromptOptions = PromptOptions(),
+    max_local_span_words: Optional[int] = None,
 ) -> str:
   """Transfer the LLM completion text to use text from hypothesis."""
   llm_text, llm_speaker = extract_text_and_spk(
@@ -506,12 +666,21 @@ def transfer_llm_completion(
   hyp_text, hyp_speaker = extract_text_and_spk(
       hyp, po=po
   )
-  transfered_llm_speaker = transcript_preserving_speaker_transfer(
-      src_text=llm_text,
-      src_spk=llm_speaker,
-      tgt_text=hyp_text,
-      tgt_spk=hyp_speaker,
-  )
+  if max_local_span_words is not None:
+    transfered_llm_speaker = locality_preserving_speaker_transfer(
+        src_text=llm_text,
+        src_spk=llm_speaker,
+        tgt_text=hyp_text,
+        tgt_spk=hyp_speaker,
+        max_local_span_words=max_local_span_words,
+    )
+  else:
+    transfered_llm_speaker = transcript_preserving_speaker_transfer(
+        src_text=llm_text,
+        src_spk=llm_speaker,
+        tgt_text=hyp_text,
+        tgt_spk=hyp_speaker,
+    )
   transferred = create_diarized_text(
       word_labels=hyp_text.split(),
       speaker_labels=transfered_llm_speaker.split(),

@@ -631,6 +631,37 @@ class UtilsTest(unittest.TestCase):
         transferred,
     )
 
+  def test_apply_locality_gated_speaker_transfer(self):
+    # Short 2-word boundary span is accepted, long 7-word monologue span is
+    # reverted to the original acoustic speaker.
+    hyp_spk = ["1", "1", "2", "1", "2", "2", "2", "3", "3", "3", "3", "3", "3", "3"]
+    llm_spk = ["1", "1", "1", "1", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2"]
+    gated = utils.apply_locality_gated_speaker_transfer(
+        hyp_spk, llm_spk, max_local_span_words=5, absorb_ghost_speakers=False
+    )
+    expected = ["1", "1", "1", "1", "2", "2", "2", "3", "3", "3", "3", "3", "3", "3"]
+    self.assertListEqual(expected, gated)
+
+  def test_locality_preserving_speaker_transfer(self):
+    src_text = "hello good morning hi how are you"
+    src_spk = "1 1 1 2 2 2 2"
+    tgt_text = "hello good morning hi how are you"
+    tgt_spk = "1 1 2 2 2 2 2"
+    transferred = utils.locality_preserving_speaker_transfer(
+        src_text, src_spk, tgt_text, tgt_spk, max_local_span_words=5
+    )
+    self.assertEqual("1 1 1 2 2 2 2", transferred)
+
+  def test_get_locality_preserving_oracle_speakers(self):
+    # 4-speaker meeting: short 1-word boundary fix is kept, long 7-word drift
+    # is anchored to hyp_spk.
+    hyp_spk = "1 1 2 1 2 2 3 3 3 3 3 3 3 4 4"
+    ora_spk = "1 1 1 1 2 2 2 2 2 2 2 2 2 4 4"
+    loc_spk = utils.get_locality_preserving_oracle_speakers(
+        hyp_spk, ora_spk, max_local_span_words=5
+    )
+    self.assertEqual("1 1 1 1 2 2 3 3 3 3 3 3 3 4 4", loc_spk)
+
 
 if __name__ == "__main__":
   unittest.main()
