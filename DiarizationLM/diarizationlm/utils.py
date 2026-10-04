@@ -496,15 +496,15 @@ def apply_locality_gated_speaker_transfer(
       if len(valid_spks) >= 2:
         for idx in range(n):
           if raw_spk[idx] not in valid_spks:
-            prev_s = raw_spk[idx - 1] if idx > 0 else None
-            next_s = None
+            prev_s = raw_spk[idx - 1] if idx > 0 else ""
+            next_s = ""
             for j in range(idx + 1, n):
               if raw_spk[j] in valid_spks:
                 next_s = raw_spk[j]
                 break
-            if prev_s in valid_spks:
+            if prev_s and prev_s in valid_spks:
               raw_spk[idx] = prev_s
-            elif next_s in valid_spks:
+            elif next_s and next_s in valid_spks:
               raw_spk[idx] = next_s
 
   gated_spk = list(hyp_spk)

@@ -7,10 +7,10 @@ before running this script.
 import config
 import dataprep
 import torch
-from transformers import TrainingArguments
-from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 from unsloth import FastLanguageModel
 from unsloth import is_bfloat16_supported
+from transformers import TrainingArguments
+from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 
 
 def run_training() -> None:
