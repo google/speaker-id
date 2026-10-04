@@ -18,7 +18,8 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 print("Tokenizing input...")
-inputs = tokenizer([HYPOTHESIS + " --> "], return_tensors="pt").to("cuda")
+prompt = f"<|turn>user\n{HYPOTHESIS} --> <turn|>\n<|turn>model\n"
+inputs = tokenizer([prompt], return_tensors="pt").to("cuda")
 
 print("Generating completion...")
 outputs = model.generate(
