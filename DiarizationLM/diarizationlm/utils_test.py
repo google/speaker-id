@@ -634,12 +634,12 @@ class UtilsTest(unittest.TestCase):
   def test_apply_locality_gated_speaker_transfer(self):
     # Short 2-word boundary span is accepted, long 7-word monologue span is
     # reverted to the original acoustic speaker.
-    hyp_spk = ["1", "1", "2", "1", "2", "2", "2", "3", "3", "3", "3", "3", "3", "3"]
-    llm_spk = ["1", "1", "1", "1", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2"]
+    hyp_spk = "1 1 2 1 2 2 2 3 3 3 3 3 3 3".split()
+    llm_spk = "1 1 1 1 2 2 2 2 2 2 2 2 2 2".split()
     gated = utils.apply_locality_gated_speaker_transfer(
         hyp_spk, llm_spk, max_local_span_words=5, absorb_ghost_speakers=False
     )
-    expected = ["1", "1", "1", "1", "2", "2", "2", "3", "3", "3", "3", "3", "3", "3"]
+    expected = "1 1 1 1 2 2 2 3 3 3 3 3 3 3".split()
     self.assertListEqual(expected, gated)
 
   def test_locality_preserving_speaker_transfer(self):

@@ -30,7 +30,7 @@ outputs = model.generate(
 
 print("Decoding completion...")
 completion = tokenizer.batch_decode(
-    outputs[:, inputs.input_ids.shape[1] :], skip_special_tokens=True
+    outputs[:, inputs.input_ids.shape[1]:], skip_special_tokens=True
 )[0]
 completion = utils.truncate_suffix_and_tailing_text(completion, " [eod]")
 

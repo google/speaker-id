@@ -1,4 +1,4 @@
-"""Configuration for finetuning Gemma 4 E4B (google/DiarizationLM-Gemma-4-E4B-v1).
+"""Configuration for finetuning Gemma 4 E4B (DiarizationLM-Gemma-4-E4B-v1).
 
 To use this config, in other python scripts, change:
 
@@ -30,7 +30,10 @@ LORA_RANK = 256
 MAX_SEQ_LENGTH = 2560
 MAX_STEPS = 10000
 DATA_NAME = "_".join(TRAINING_INPUT.keys())
-MODEL_ID = f"{MODEL_NAME.replace('/', '_')}_{DATA_NAME}_LORA{LORA_RANK}_LEN{MAX_SEQ_LENGTH}"
+MODEL_ID = (
+    f"{MODEL_NAME.replace('/', '_')}_{DATA_NAME}_"
+    f"LORA{LORA_RANK}_LEN{MAX_SEQ_LENGTH}"
+)
 
 # Export
 CHECKPOINT = 10000
