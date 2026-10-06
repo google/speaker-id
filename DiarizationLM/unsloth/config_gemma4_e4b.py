@@ -1,4 +1,4 @@
-"""Configuration for finetuning Gemma 4 E4B (DiarizationLM-Gemma-4-E4B-v1).
+"""Configuration for finetuning Gemma 4 E4B (wq2012/DiarizationLM-Gemma-4-E4B-v1).
 
 To use this config, in other python scripts, change:
 
