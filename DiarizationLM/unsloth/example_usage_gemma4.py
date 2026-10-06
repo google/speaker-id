@@ -1,10 +1,10 @@
-"""Example usage of google/DiarizationLM-Gemma-4-E4B-v1."""
+"""Example usage of diarizers-community/DiarizationLM-Gemma-4-E4B-v1."""
 
 from diarizationlm import utils
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-MODEL_ID = "google/DiarizationLM-Gemma-4-E4B-v1"
+MODEL_ID = "diarizers-community/DiarizationLM-Gemma-4-E4B-v1"
 
 HYPOTHESIS = (
     "<speaker:1> Hello, how are you doing <speaker:2> today? I am doing well."
@@ -18,7 +18,8 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 print("Tokenizing input...")
-inputs = tokenizer([HYPOTHESIS + " --> "], return_tensors="pt").to("cuda")
+prompt = f"<|turn>user\n{HYPOTHESIS} --> <turn|>\n<|turn>model\n"
+inputs = tokenizer([prompt], return_tensors="pt").to("cuda")
 
 print("Generating completion...")
 outputs = model.generate(
