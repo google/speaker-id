@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/google/speaker-id/branch/master/graph/badge.svg)](https://codecov.io/gh/google/speaker-id)
 [![arxiv](https://img.shields.io/badge/arXiv-preprint-blue.svg)](https://arxiv.org/abs/2401.03506)
 [![Daily Papers](https://img.shields.io/badge/Daily-Papers-blue.svg)](https://huggingface.co/papers/2401.03506)
-[![HuggingFace](https://img.shields.io/badge/Hugging-Face-blue.svg)](https://huggingface.co/wq2012/DiarizationLM-Gemma-4-E4B-v1)
+[![HuggingFace](https://img.shields.io/badge/Hugging-Face-blue.svg)](https://huggingface.co/diarizers-community/DiarizationLM-Gemma-4-E4B-v1)
 [![HuggingFace Space](https://img.shields.io/badge/Online-Demo-blue.svg)](https://huggingface.co/spaces/diarizers-community/DiarizationLM-GGUF)
 
 
@@ -31,7 +31,7 @@
 Here we open source some functions and tools used in the [DiarizationLM paper](https://arxiv.org/abs/2401.03506).
 
 We also have open source models on Hugging Face:
-* **Gemma 4 E4B (4B, multi-domain, best overall):** https://huggingface.co/wq2012/DiarizationLM-Gemma-4-E4B-v1
+* **Gemma 4 E4B (4B, multi-domain, best overall):** https://huggingface.co/diarizers-community/DiarizationLM-Gemma-4-E4B-v1
 * **Llama 3 8B (Fisher):** https://huggingface.co/google/DiarizationLM-8b-Fisher-v2
 
 Play with our demo: https://huggingface.co/spaces/diarizers-community/DiarizationLM-GGUF
@@ -174,7 +174,7 @@ After you have finetuned a model, we provide a Python script `run_finetuned_gpt.
 
 We open sourced Gemma 4, Llama 3, and Llama 2 based models on Hugging Face:
 
-* Gemma 4 E4B (4B, multi-domain across Fisher, Callhome, ICSI, and AMI): https://huggingface.co/wq2012/DiarizationLM-Gemma-4-E4B-v1
+* Gemma 4 E4B (4B, multi-domain across Fisher, Callhome, ICSI, and AMI): https://huggingface.co/diarizers-community/DiarizationLM-Gemma-4-E4B-v1
 * Llama 3 8B (Fisher): https://huggingface.co/google/DiarizationLM-8b-Fisher-v2
 * Llama 2 13B (Fisher): https://huggingface.co/google/DiarizationLM-13b-Fisher-v1
 

@@ -1,10 +1,10 @@
-"""Example usage of wq2012/DiarizationLM-Gemma-4-E4B-v1."""
+"""Example usage of diarizers-community/DiarizationLM-Gemma-4-E4B-v1."""
 
 from diarizationlm import utils
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-MODEL_ID = "wq2012/DiarizationLM-Gemma-4-E4B-v1"
+MODEL_ID = "diarizers-community/DiarizationLM-Gemma-4-E4B-v1"
 
 HYPOTHESIS = (
     "<speaker:1> Hello, how are you doing <speaker:2> today? I am doing well."
