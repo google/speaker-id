@@ -7,6 +7,13 @@ from lingvo.core import base_layer
 from lingvo.core import py_utils
 
 
+def _multi_axis_softmax(x, axis):
+  """Computes softmax over multiple axes."""
+  numerator = tf.math.exp(x - tf.math.reduce_max(x, axis=axis, keepdims=True))
+  denominator = tf.math.reduce_sum(numerator, axis=axis, keepdims=True)
+  return numerator / denominator
+
+
 class AttentiveScoringLayer(base_layer.BaseLayer):
   """Calculates attentive scores for enroll & test set representations."""
 
@@ -212,12 +219,15 @@ class AttentiveScoringLayer(base_layer.BaseLayer):
       # Calculate the softmax across scores specific to each test key for a
       # trial. Also scale down by the number of test keys so that the final
       # summation is correct.
-      scoring_softmax = tf.keras.activations.softmax(
-          keys_cross_scores_scaled, axis=[3, 4]) / p.num_keys
+      scoring_softmax = (
+          _multi_axis_softmax(keys_cross_scores_scaled, axis=[3, 4])
+          / p.num_keys
+      )
     else:
       # Calculate softmax across all key scores specific to each trial
-      scoring_softmax = tf.keras.activations.softmax(
-          keys_cross_scores_scaled, axis=[1, 3, 4])
+      scoring_softmax = _multi_axis_softmax(
+          keys_cross_scores_scaled, axis=[1, 3, 4]
+      )
 
     # Calculate scores of test segments against bundled enrollment segments
     # normalized by the softmax weighting function.
